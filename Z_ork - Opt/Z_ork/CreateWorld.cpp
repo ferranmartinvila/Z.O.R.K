@@ -5,8 +5,7 @@
 void world::generate_world(){
 
 	//Principal Square Data
-	strcpy(game_map->room[0].name, "\nPrincipal Square: ");
-	strcpy(game_map->room[0].zone, "Bloody Sword Square\n");
+	strcpy(game_map->room[0].name, "\nBloody Sword Principal Square");
 	strcpy(game_map->room[0].description, "Central Square of Bloody Sword. This square is impollute and there's one of the best kingdom knights sorrounding it. Maybe someone important for the king lives arround here.\n");
 	//Room coordenades
 	game_map->room[0].x_cor = game_map->room[0].y_cor = 0;
@@ -43,8 +42,7 @@ void world::generate_world(){
 
 
 	//Dead end street Data
-	strcpy(game_map->room[1].name, "\nDead end Street: ");
-	strcpy(game_map->room[1].zone, "Bloody Sword Street\n");
+	strcpy(game_map->room[1].name, "\nDead end Street");
 	strcpy(game_map->room[1].description, "Abandoned street full of rubbish that ends in the wall of the city. Is difficult to stay here to much time, so people only comes here to throw his shit.\n");
 	// room coordenades
 	game_map->room[1].x_cor = 1;
@@ -60,8 +58,7 @@ void world::generate_world(){
 
 
 	//Ruined House Data
-	strcpy(game_map->room[2].name, "\nRuined House: ");
-	strcpy(game_map->room[2].zone, "Poor District\n");
+	strcpy(game_map->room[2].name, "\nRuined House");
 	strcpy(game_map->room[2].description, "This house will fall down at any moment it practically don't have roof and you can smell the odor of the street next to this house. Surprisingly here there's a poor family living or more precisely surviving\n");
 	//Room coordenades
 	game_map->room[2].x_cor = 0;
@@ -77,8 +74,7 @@ void world::generate_world(){
 
 
 	//Jack's House Lobby Data
-	strcpy(game_map->room[3].name, "\nLobby: ");
-	strcpy(game_map->room[3].zone, "Jack's House\n");
+	strcpy(game_map->room[3].name, "\nJack's House Lobby");
 	strcpy(game_map->room[3].description, "Little and luxury room for recieve guests. Full of family portraits.\n");
 	//Room coordenades
 	game_map->room[3].x_cor = 0;
@@ -101,8 +97,7 @@ void world::generate_world(){
 
 
 	//Jack's House Main Room Data
-	strcpy(game_map->room[4].name, "\nMain Room: ");
-	strcpy(game_map->room[4].zone, "Jack's House\n");
+	strcpy(game_map->room[4].name, "\nJack's House Main Room");
 	strcpy(game_map->room[4].description, "Biggest room of the house filled with belic objects with an incalculable valor. Like bright golden swords.\n");
 	//Room coordenades
 	game_map->room[4].x_cor = 0;
@@ -132,8 +127,7 @@ void world::generate_world(){
 
 
 	//Jack's House Kitchen Data
-	strcpy(game_map->room[5].name, "\nKitchen: ");
-	strcpy(game_map->room[5].zone, "Jack's House\n");
+	strcpy(game_map->room[5].name, "\nJack's House Kitchen");
 	strcpy(game_map->room[5].description, "Big kichen fully of slaves working hard for the owners. Isn't so clean for be a kitchen probably the owners don't enter. They must be very busy.\n");
 	//Room coordenades
 	game_map->room[5].x_cor = 1;
@@ -150,8 +144,7 @@ void world::generate_world(){
 
 
 	//Jack's House Bathroom Data
-	strcpy(game_map->room[6].name, "\nBathroom: ");
-	strcpy(game_map->room[6].zone, "Jack's House\n");
+	strcpy(game_map->room[6].name, "\nJack's House Bathroom");
 	strcpy(game_map->room[6].description, "The most clean room of the house probably because there's only a hole , a mirror and a pair of vases.\n");
 	//Room coordenades
 	game_map->room[6].x_cor = 0;
@@ -167,8 +160,7 @@ void world::generate_world(){
 
 
 	//Jack's Forge Shop Data
-	strcpy(game_map->room[7].name, "\nShop: ");
-	strcpy(game_map->room[7].zone, "Jack's Forge\n");
+	strcpy(game_map->room[7].name, "\nJack's Forge Shop");
 	strcpy(game_map->room[7].description, "Little room full of iron tools and with a showcase of weapons behind the counter.\n");
 	//Room coordenades
 	game_map->room[7].x_cor = -1;
@@ -191,8 +183,7 @@ void world::generate_world(){
 
 
 	//Jack's Forge Warehouse Data
-	strcpy(game_map->room[8].name, "\nWarehouse: ");
-	strcpy(game_map->room[8].zone, "Jack's Forge\n");
+	strcpy(game_map->room[8].name, "\nJack's Forge Warehouse");
 	strcpy(game_map->room[8].description, "Amazingly big and dirty room full of metal pieces.Probably this is the biggest underground warehouse that I have ever seen.\n");
 	//Room coordenades
 	game_map->room[8].x_cor = -2;
@@ -215,8 +206,7 @@ void world::generate_world(){
 
 
 	//Jack's Forge Large Furnace Data
-	strcpy(game_map->room[9].name, "\nLarge Furnace: ");
-	strcpy(game_map->room[9].zone, "Jack's Forge\n");
+	strcpy(game_map->room[9].name, "\nJack's Forge Large Furnace");
 	strcpy(game_map->room[9].description, "Excessively large furnace that can melt the most resistant metals. It not seems to have been used for melt metals..\n");
 	// room coordenades
 	game_map->room[9].x_cor = -2;
