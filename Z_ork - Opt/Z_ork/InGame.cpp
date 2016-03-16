@@ -78,7 +78,7 @@ char world::enter_action(){
 	}
 	//help order
 	if (order == "help"){
-		printf("\n\nLook here -> Look this room\nLook + direction -> Look exits\nGo + direction ->Move\nOpen + direction -> Open door\nClose + direction -> Close door\n\n");
+		printf("\n\nLook here -> Look this room\nLook + direction -> Look exits\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\n\n");
 		getchar();
 	}
 	
