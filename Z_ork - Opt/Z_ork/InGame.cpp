@@ -39,16 +39,20 @@ char world::enter_action(){
 	//go order
 	if (order == "go"){
 		for (int k = 0; k < 18; k++){
-			if (me->inroom == game_map->exit[k].in_room&&game_map->exit[k].door_state==true){
-				if (direct_number == 0 && game_map->exit[k].way == 0){ me->y++; }
-				if (direct_number == 2 && game_map->exit[k].way == 2){ me->y--; }
-				if (direct_number == 1 && game_map->exit[k].way == 1){ me->x++; }
-				if (direct_number == 3 && game_map->exit[k].way == 3){ me->x--; }
+			if (me->inroom == game_map->exit[k].in_room){
+				if (game_map->exit[k].door&&game_map->exit[k].door_state || game_map->exit[k].door == false){
+					if (direct_number == 0 && game_map->exit[k].way == 0){ me->y++; }
+					if (direct_number == 2 && game_map->exit[k].way == 2){ me->y--; }
+					if (direct_number == 1 && game_map->exit[k].way == 1){ me->x++; }
+					if (direct_number == 3 && game_map->exit[k].way == 3){ me->x--; }
+				}
 			}
 		}
 		for (int k = 0; k < 10; k++){
 			if (game_map->room[k].x_cor == me->x&&game_map->room[k].y_cor == me->y){
-				me->inroom = k;}}
+				me->inroom = k;
+			}
+		}
 	}
 	
 	//look order
