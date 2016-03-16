@@ -15,21 +15,21 @@ void world::generate_world(){
 	game_map->exit[0].way = 0;
 	game_map->exit[0].to_room = 3;
 	game_map->exit[0].in_room = 0;
-	game_map->exit[0].door == true;
+	game_map->exit[0].door = true;
 	game_map->exit[0].door_state = true;
 	//Principal Square to Dead end Street
 	strcpy(game_map->exit[1].description, "\nThere's a abandoned street. It don't seems to lead anywhere but the polluted air makes impossible see the end.\n");
 	game_map->exit[1].way = 1;
 	game_map->exit[1].to_room = 1;
 	game_map->exit[1].in_room = 0;
-	game_map->exit[1].door == false;
+	game_map->exit[1].door = false;
 	game_map->exit[1].door_state = NULL;
 	//Principal Square to Ruined House
 	strcpy(game_map->exit[2].description, "\nUnder the herbs there's a ruined house with only one room. I don't know how there's people living there.");
 	game_map->exit[2].way = 2;
 	game_map->exit[2].to_room = 2;
 	game_map->exit[2].in_room = 0;
-	game_map->exit[2].door == true;
+	game_map->exit[2].door = true;
 	game_map->exit[2].door_state = true;
 	//Principal Square to Shop
 	strcpy(game_map->exit[3].description, "\nThere's little but well maintained forge. In the door there's a poster where you can read 'Jack's Forge'.\n");
@@ -37,7 +37,7 @@ void world::generate_world(){
 	game_map->exit[3].way = 3;
 	game_map->exit[3].to_room = 7;
 	game_map->exit[3].in_room = 0;
-	game_map->exit[3].door == true;
+	game_map->exit[3].door = true;
 	game_map->exit[3].door_state = false;
 
 
@@ -54,7 +54,7 @@ void world::generate_world(){
 	game_map->exit[4].way = 3;
 	game_map->exit[4].to_room = 0;
 	game_map->exit[4].in_room = 1;
-	game_map->exit[4].door == false;
+	game_map->exit[4].door = false;
 	game_map->exit[4].door_state = NULL;
 	
 
@@ -71,7 +71,7 @@ void world::generate_world(){
 	game_map->exit[5].way = 0;
 	game_map->exit[5].to_room = 0;
 	game_map->exit[5].in_room = 2;
-	game_map->exit[5].door == true;
+	game_map->exit[5].door = true;
 	game_map->exit[5].door_state = true;
 	
 
@@ -88,14 +88,14 @@ void world::generate_world(){
 	game_map->exit[6].way = 0;
 	game_map->exit[6].to_room = 3;
 	game_map->exit[6].in_room = 3;
-	game_map->exit[6].door == false;
+	game_map->exit[6].door = false;
 	game_map->exit[6].door_state = NULL;
 	//Lobby to Principal Square
 	strcpy(game_map->exit[7].description, "There's a big wood door that takes you outside.\n");
 	game_map->exit[7].way = 2;
 	game_map->exit[7].to_room = 0;
 	game_map->exit[7].in_room = 3;
-	game_map->exit[7].door == true;
+	game_map->exit[7].door = true;
 	game_map->exit[7].door_state = true;
 
 
@@ -112,21 +112,21 @@ void world::generate_world(){
 	game_map->exit[8].way = 0;
 	game_map->exit[8].to_room = 6;
 	game_map->exit[8].in_room = 4;
-	game_map->exit[8].door == true;
+	game_map->exit[8].door = true;
 	game_map->exit[8].door_state = false;
 	//Main Room to Kitchen
 	strcpy(game_map->exit[9].description, "Is impossible to don't realize about the noise that comes from that room. It sounds like a group of people where fighting.\n");
 	game_map->exit[9].way = 1;
 	game_map->exit[9].to_room = 5;
 	game_map->exit[9].in_room = 4;
-	game_map->exit[9].door == true;
+	game_map->exit[9].door = true;
 	game_map->exit[9].door_state = true;
 	//Main Room to Lobby
 	strcpy(game_map->exit[10].description, "There's the lobby.\n");
 	game_map->exit[10].way = 2;
 	game_map->exit[10].to_room = 3;
 	game_map->exit[10].in_room = 4;
-	game_map->exit[10].door == false;
+	game_map->exit[10].door = false;
 	game_map->exit[10].door_state = NULL;
 
 
@@ -144,7 +144,7 @@ void world::generate_world(){
 	game_map->exit[11].way = 3;
 	game_map->exit[11].to_room = 3;
 	game_map->exit[11].in_room = 5;
-	game_map->exit[11].door == true;
+	game_map->exit[11].door = true;
 	game_map->exit[11].door_state = true;
 
 
@@ -160,8 +160,8 @@ void world::generate_world(){
 	strcpy(game_map->exit[12].description, "It seems to be some shiniy objects right there or maybe is the sun reflected in that metal piece.\n");
 	game_map->exit[12].way = 2;
 	game_map->exit[12].to_room = 4;
-	game_map->exit[12].in_room =6;
-	game_map->exit[12].door == true;
+	game_map->exit[12].in_room = 6;
+	game_map->exit[12].door = true;
 	game_map->exit[12].door_state = false;
 
 
@@ -178,14 +178,14 @@ void world::generate_world(){
 	game_map->exit[13].way = 1;
 	game_map->exit[13].to_room = 0;
 	game_map->exit[13].in_room = 7;
-	game_map->exit[13].door == true;
+	game_map->exit[13].door = true;
 	game_map->exit[13].door_state = true;
 	//Shop to Warehouse
 	strcpy(game_map->exit[14].description, "Between the tools there's a small door that probalby takes you to the warehouse.");
 	game_map->exit[14].way = 3;
 	game_map->exit[14].to_room = 8;
 	game_map->exit[14].in_room = 7;
-	game_map->exit[14].door == true;
+	game_map->exit[14].door = true;
 	game_map->exit[14].door_state = true;
 
 
@@ -202,14 +202,14 @@ void world::generate_world(){
 	game_map->exit[15].way = 1;
 	game_map->exit[15].to_room = 7;
 	game_map->exit[15].in_room = 8;
-	game_map->exit[15].door == true;
+	game_map->exit[15].door = true;
 	game_map->exit[15].door_state = true;
 	//Warehouse to Large Furnace
 	strcpy(game_map->exit[16].description, "There's a big door practically invisible for the dirt.\n");
 	game_map->exit[16].way = 2;
 	game_map->exit[16].to_room = 9;
 	game_map->exit[16].in_room = 8;
-	game_map->exit[16].door == true;
+	game_map->exit[16].door = true;
 	game_map->exit[16].door_state = true;
 
 
@@ -226,7 +226,7 @@ void world::generate_world(){
 	game_map->exit[17].way = 0;
 	game_map->exit[17].to_room = 8;
 	game_map->exit[17].in_room = 9;
-	game_map->exit[17].door == true;
+	game_map->exit[17].door = true;
 	game_map->exit[17].door_state = true;
 
 	//Character Initalization
