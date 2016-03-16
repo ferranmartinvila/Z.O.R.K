@@ -58,6 +58,8 @@ char world::enter_action(){
 				printf("%s", game_map->exit[k].description);
 			}
 		}
+		if (direction == "here"){
+		printf("%s\n", game_map->room[me->inroom].description);
 	}
 	
 	//help order
