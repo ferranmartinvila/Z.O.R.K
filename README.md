@@ -17,6 +17,8 @@ For exit enter "quit".
 
 All the comands have to be written in small letters.
 
+-> help = Show all the game comands and how they work.
+
 -> look here/look + direction/look exits = Shows you the descripitio of what you are looking.
 
 -> go + direction = Move your avatar if is possible
@@ -24,3 +26,5 @@ All the comands have to be written in small letters.
 -> open + direction door = Open doors 
 
 -> close + direction door = Close doors
+
+-> quit = Exit the game
