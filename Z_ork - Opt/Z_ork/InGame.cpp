@@ -96,7 +96,32 @@ char world::enter_action(){
 				}
 			}
 		}
-	
+
+	//close order
+	if (order == "close"){
+		for (int k = 0; k < 18; k++){
+			printf("\nPorta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+			if (game_map->exit[k].in_room == me->inroom&&game_map->exit[k].way == direct_number){
+				if (game_map->exit[k].door_state == false){
+					printf("\nThat door was already close\n");
+					printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+				}
+				if (game_map->exit[k].door_state&& game_map->exit[k].door){
+					for (int t = 0; t < 18; t++){
+						if (game_map->exit[k].in_room == game_map->exit[t].to_room&&game_map->exit[t].in_room == game_map->exit[k].to_room){
+							printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+							game_map->exit[k].door_state = game_map->exit[t].door_state = false;
+						}
+					}
+					printf("\nThe  door is closed now!\n");
+				}
+				else if (game_map->exit[k].door == false){
+					printf("\nThere's no door\n");
+					printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+				}
+			}
+		}
+	}	
 
 	//quit order
 	if (order == "quit"){
