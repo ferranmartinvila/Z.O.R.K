@@ -67,76 +67,37 @@ char world::enter_action(){
 	}
 	
 	//help order
-	if (order == "help"){
-		printf("Look -> Look this room\nLook + direction -> Look exits\nGo + direction ->Move\nOpen + direction -> Open door\nClose + direction -> Close door\n\n");
-		getchar();
-	}
+		if (order == "help"){
+			printf("Look here -> Look this room\nLook + direction -> Look exits\nGo + direction ->Move\nOpen + direction -> Open door\nClose + direction -> Close door\n\n");
+		}
 	
 	//open order
-	if (order == "open"){
-		for (int k = 0; k < 18; k++){
-			if (game_map->exit[k].door_state == NULL&&game_map->exit[k].in_room == me->inroom&&game_map->exit[k].way == direct_number){
-				printf("\nThere's no door\n");
-			}
-			else if (game_map->exit[k].door_state&&game_map->exit[k].in_room == me->inroom&&game_map->exit[k].way == direct_number&&game_map->exit[k].door_state==true){
-				printf("\nThat door was already open\n");
-			}
-			else if (me->inroom == game_map->exit[k].in_room && direct_number == game_map->exit[k].way){
-				game_map->exit[k].door_state = game_map->exit[k].door_state = true;
-				printf("\nThe  door is open now!\n");
+		if (order == "open"){
+			for (int k = 0; k < 18; k++){
+				printf("\nPorta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+				if (game_map->exit[k].in_room == me->inroom&&game_map->exit[k].way == direct_number){
+					if (game_map->exit[k].door_state == true){
+						printf("\nThat door was already open\n");
+						printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+					}
+					if (game_map->exit[k].door_state == false && game_map->exit[k].door){
+						for (int t = 0; t < 18; t++){
+							if (game_map->exit[k].in_room == game_map->exit[t].to_room&&game_map->exit[t].in_room == game_map->exit[k].to_room){
+								printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+								game_map->exit[k].door_state = game_map->exit[t].door_state = true;
+							}
+						}
+						printf("\nThe  door is open now!\n");
+					}
+					else if (game_map->exit[k].door == false){
+						printf("\nThere's no door\n");
+						printf("\nChoose: Porta %i Estat %i", game_map->exit[k].door, game_map->exit[k].door_state);
+					}
 				}
 			}
 		}
-	}
 	
-		/*if (me->inroom == game_map->gone[2].in_room&&direct_number == game_map->gone[2].way&&game_map->gone[2].door){
-			game_map->gone[2].door_state = true;
-			printf("The door is closed.");
-		}
-		else{
-			printf("There's no door");
-		}
-		if (direction == "north"&&game_map->room[me->inroom].exit[0].acces&&game_map->room[me->inroom].exit[0].door == false){
-			game_map->room[me->inroom].exit[0].door = true;
-			printf("Now the north door from the %s is open!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "south"&&game_map->room[me->inroom].exit[2].acces&&game_map->room[me->inroom].exit[2].door == false){
-			game_map->room[me->inroom].exit[2].door = true;
-			printf("Now the south door from the %s is open!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "east"&&game_map->room[me->inroom].exit[1].acces&&game_map->room[me->inroom].exit[1].door == false){
-			game_map->room[me->inroom].exit[1].door = true;
-			printf("Now the east door from the %s is open!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "west"&&game_map->room[me->inroom].exit[3].acces&&game_map->room[me->inroom].exit[3].door == false){
-			game_map->room[me->inroom].exit[3].door = true;
-			printf("Now the west door from the %s is open!", game_map->room[me->inroom].name);
-		}*/
-	/*
-	//close order
-	if (order == "close"){
-		if (direction == "north"&&game_map->room[me->inroom].exit[0].acces&&game_map->room[me->inroom].exit[0].door){
-			game_map->room[me->inroom].exit[0].door = false;
-			printf("Now the north door from the %s is close!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "south"&&game_map->room[me->inroom].exit[2].acces&&game_map->room[me->inroom].exit[2].door){
-			game_map->room[me->inroom].exit[2].door = false;
-			printf("Now the south door from the %s is close!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "east"&&game_map->room[me->inroom].exit[1].acces&&game_map->room[me->inroom].exit[1].door){
-			game_map->room[me->inroom].exit[1].door = false;
-			printf("Now the east door from the %s is close!", game_map->room[me->inroom].name);
-		}
-		else if (direction == "west"&&game_map->room[me->inroom].exit[3].acces&&game_map->room[me->inroom].exit[3].door){
-			game_map->room[me->inroom].exit[3].door = false;
-			printf("Now the west door from the %s is close!", game_map->room[me->inroom].name);
-		}
-		else {
-			printf("There's just a wall");
-		}
-		getchar();
-	}
-	*/
+
 	//quit order
 	if (order == "quit"){
 		return 'q';
