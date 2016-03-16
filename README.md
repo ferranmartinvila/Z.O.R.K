@@ -28,3 +28,8 @@ All the comands have to be written in small letters.
 -> close + direction door = Close doors
 
 -> quit = Exit the game
+
+###Message to the teacher:
+######I have to create a new zork repository because i can't acces or clone the original one from my house. So all the commits and releases have been done today(16/3/16).
+
+
