@@ -64,13 +64,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="CreateWorld.cpp" />
-    <ClCompile Include="InGame.cpp" />
+    <ClCompile Include="functions.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="exits.h" />
+    <ClInclude Include="functions.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="Rooms.h" />
     <ClInclude Include="World.h" />

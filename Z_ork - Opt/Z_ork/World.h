@@ -1,7 +1,11 @@
+#include <iostream>
 #include "character.h"
 #include "map.h"
 
-struct world{
+#ifndef _world_
+#define _world_
+class world{
+public:
 	map*game_map = nullptr;
 	character*me = nullptr;
 	world(){
@@ -9,9 +13,8 @@ struct world{
 		me = new character;
 	}
 	~world(){
-		delete game_map;
 		delete me;
+		delete game_map;
 	}
-	void generate_world();
-	char enter_action();
 };
+#endif

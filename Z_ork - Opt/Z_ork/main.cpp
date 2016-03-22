@@ -1,17 +1,17 @@
-#include <stdio.h>
-#include <cstdlib>
-#include "world.h"
-
-
+#include"World.h"
+#include"functions.h"
 int main(){
+	//structs data
 	world data;
-	data.generate_world();
-	char option;
-	do{
-		system("cls");
-		printf("Your actual possition is: %s\n\n", data.game_map->room[data.me->inroom].name);
-		option = data.enter_action();
-		getchar();
-	} while (option != 'q');
+	functions calculate;
+	//initialize game data
+	data.me->Initialize();
+	data.game_map->Initialize();
+	//game bucle
+	char option = 0;
+	while (option != 'q'){
+		option = calculate.enter_and_apply_order(data);
+	}
+	//deletes the game data before close the progam
 	return 0;
 }

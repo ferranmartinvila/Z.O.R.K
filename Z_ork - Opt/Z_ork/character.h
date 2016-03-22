@@ -1,9 +1,9 @@
 #ifndef _Character_
 #define _Character_
 struct character{
-	int x, y, inroom;
+	int pos_x, pos_y, inroom;
 	void Initialize(){
-		x = y = inroom = 0;
+		pos_x = pos_y = inroom = 0;
 	}
 };
 #endif
