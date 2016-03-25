@@ -29,9 +29,6 @@
     <ClInclude Include="map.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="Rooms.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="character.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
@@ -42,6 +39,12 @@
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="item.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="rooms.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

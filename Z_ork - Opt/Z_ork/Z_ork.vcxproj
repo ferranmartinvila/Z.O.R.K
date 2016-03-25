@@ -72,8 +72,9 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
     <ClInclude Include="functions.h" />
+    <ClInclude Include="item.h" />
     <ClInclude Include="map.h" />
-    <ClInclude Include="Rooms.h" />
+    <ClInclude Include="rooms.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

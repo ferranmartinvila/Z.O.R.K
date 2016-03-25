@@ -5,8 +5,7 @@ int main(){
 	world data;
 	functions calculate;
 	//initialize game data
-	data.me->Initialize();
-	data.game_map->Initialize();
+	data.Initialize();
 	//game bucle
 	char option = 0;
 	while (option != 'q'){
