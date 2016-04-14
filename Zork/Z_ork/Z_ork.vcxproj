@@ -64,17 +64,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="functions.cpp" />
+    <ClCompile Include="character.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="string.cpp" />
+    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="dinamic_array.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
-    <ClInclude Include="functions.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="rooms.h" />
+    <ClInclude Include="string.h" />
     <ClInclude Include="World.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
