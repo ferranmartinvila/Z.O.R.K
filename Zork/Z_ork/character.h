@@ -1,3 +1,6 @@
+
+#ifndef _character_
+#define _character_
 #include "entity.h"
 #include "map.h"
 #include "string.h"
@@ -5,12 +8,10 @@
 #include"dinamic_array.h"
 #include"string.h"
 #include <stdio.h>
-#ifndef _character_
-#define _character_
 class character :public entity{
 public:
-	int pos_x, pos_y, inroom, next_room, direction[2], exit_used;
-	vector<item>bag;
+	int pos_x, pos_y, inroom, next_room, direction[2], exit_used,object_focused;
+	vector<item*>bag;
 	item equipation;
 
 	character(){

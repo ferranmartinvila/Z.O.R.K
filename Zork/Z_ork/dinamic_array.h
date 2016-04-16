@@ -1,6 +1,6 @@
-#include<stdio.h>
 #ifndef _dinamic_array_
 #define _dinamic_array_
+#include<stdio.h>
 template<class type>
 class vector{
 private:
@@ -16,7 +16,8 @@ public:
 		elements = copy.elements;
 		buffer = new type[elements];
 		for (unsigned int i = 0; i <= elements-1; i++){
-			buffer[i] = copy.buffer[i];
+				buffer[i] = copy.buffer[i];
+			
 		}
 	}
 
@@ -35,15 +36,11 @@ public:
 			for (unsigned int k = 0; k < elements; k++){
 				copy[k] = buffer[k];
 			}
-			copy[elements] = element;
-			elements++;
 			delete[] buffer;
 			buffer= copy;
 		}
-		else{
 			buffer[elements] = element;
 			elements++;
-		}
 	}
 
 	//push front
@@ -71,7 +68,6 @@ public:
 
 	//clean
 	void clean(){
-		buffer = nullptr;
 		elements = 0;
 	}
 
@@ -87,7 +83,6 @@ public:
 
 	//pop_back
 	void pop_back(){
-		buffer[elements] = nullptr;
 		elements--;
 	}
 

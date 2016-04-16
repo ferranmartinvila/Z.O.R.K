@@ -1,7 +1,7 @@
-#include"entity.h"
-#include"string.h"
 #ifndef _rooms_
 #define _rooms_
+#include"entity.h"
+#include"string.h"
 class rooms :public entity{
 public:
 	int x_cor, y_cor;

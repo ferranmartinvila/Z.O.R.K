@@ -47,18 +47,11 @@ void world::Initialize(){
 	me->pos_x = me->pos_y = me->inroom = me->exit_used = me->next_room = me->direction[0] = me->direction[1] = 0;
 	me->name = "Earl the knight";
 	me->description = "You are a brave knight from a far village called Gandar there all the people respects you but here in Bloody Sword nobody knows you.";
-	//inventory
-	int cell_location = 10;
-	for (int k = 0; k < 4; k++){
-	me->bag.buffer[k].name = nullptr;
-	me->bag.buffer[k].description = nullptr;
-	me->bag.buffer[k].location = cell_location;
-	cell_location++;
-	}
-	me->equipation.name = nullptr;
-	me->equipation.description = nullptr;
-	me->equipation.location = 13;
-	
+	for (int n = 0; n <6; n++){
+			me->bag.buffer[n]->name = nullptr;
+			me->bag.buffer[n]->description = nullptr;
+		}
+
 	//MAP
 	//ROOMS
 	//Principal Square Data
@@ -144,40 +137,70 @@ void world::get_instruction(vector<string>& instruction){
 	char phrase[40];
 	printf("Enter the next action:");
 	gets_s(phrase);
-	instruction=tokenize(phrase);
-
-	//generates a variable with the number of the room that the player is focused and coords of this room
-	if (instruction.buffer[0] == "go" || instruction.buffer[0] == "look" || instruction.buffer[0] == "open" || instruction.buffer[0] == "close"){
-		if (instruction.buffer[1] == "north")me->direction[1]++;
-		else if (instruction.buffer[1] == "east")me->direction[0]++;
-		else if (instruction.buffer[1] == "south")me->direction[1]--;
-		else if (instruction.buffer[1] == "west")me->direction[0]--;
-
-
-		//calculates the room where you focus the action and the exit between your room and it
-		for (int k = 0; k < 10; k++){
-			if (game_map->room.buffer[k]->x_cor == me->direction[0] && game_map->room.buffer[k]->y_cor == me->direction[1]){
-				me->next_room = k;
-				k = 9;
-			}
-			else me->next_room = me->inroom;
-		}
-		for (int i = 0; i < 9; i++){
-			if ((game_map->exit.buffer[i]->room_1 == me->inroom || game_map->exit.buffer[i]->room_2 == me->inroom) && (game_map->exit.buffer[i]->room_1 == me->next_room || game_map->exit.buffer[i]->room_2 == me->next_room)){
-				me->exit_used = i;
-				i = 9;
-			}
-		}
-	}
+	string cpy = phrase;
+	if (cpy.lenght()>0){
+		instruction = tokenize(phrase);
 }
+	if (instruction.get_size() > 1){
+		//resets directions to the actual position to calculate the next room you focus
+		me->direction[0] = me->pos_x;
+		me->direction[1] = me->pos_y;
+		//generates a variable with the number of the room that the player is focused and coords of this room
+			if (instruction.buffer[1] == "north")me->direction[1]++;
+			else if (instruction.buffer[1] == "east")me->direction[0]++;
+			else if (instruction.buffer[1] == "south")me->direction[1]--;
+			else if (instruction.buffer[1] == "west")me->direction[0]--;
+
+
+			//calculates the room where you focus the action and the exit between your room and it
+			for (int k = 0; k < 10; k++){
+				if (game_map->room.buffer[k]->x_cor == me->direction[0] && game_map->room.buffer[k]->y_cor == me->direction[1]){
+					me->next_room = k;
+					k = 9;
+				}
+				else me->next_room = me->inroom;
+			}
+			for (int i = 0; i < 9; i++){
+				if ((game_map->exit.buffer[i]->room_1 == me->inroom || game_map->exit.buffer[i]->room_2 == me->inroom) && (game_map->exit.buffer[i]->room_1 == me->next_room || game_map->exit.buffer[i]->room_2 == me->next_room)){
+					me->exit_used = i;
+					i = 9;
+				}
+			}
+		}
+
+		//calculates the object you focus
+		if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")&&instruction.get_size()>1){
+			string copy;
+			if (instruction.get_size() == 3){
+				copy = ((instruction.buffer[1] + instruction.buffer[2]));
+			}
+			else if (instruction.get_size() == 2){
+				copy = instruction.buffer[1];
+			}
+				for (int n = 0; n < 8; n++){
+					if (copy == object.buffer[n]->name.STR
+						|| instruction.buffer[1] == object.buffer[n]->name.STR){
+						me->object_focused = n;
+						n = 8;
+				}
+			}
+		}
+		else if (instruction.buffer[0] != "quit"&&instruction.buffer[0] != "help")(printf("Invalid comand"));
+	}
 
 char world::apply_order(vector<string>& instruction){
-	if (instruction.buffer[0] == "quit")return 'q';
-	if (instruction.buffer[0] == "help"){ printf("\nLook here -> Look this room\nLook + direction -> Look exits\nLook me -> Look the avatar\nLook inventory -> Show all inventory objects\nLook room objects -> Show all the objects in this room\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\n"); }
-	else if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction);
-	else if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction);
-	else if ((instruction.buffer[0] == "open" || instruction.buffer[0] == "close") && instruction.buffer[2] == "door")me->apply_door_instruction(*game_map, instruction);
-	else if (instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")me->apply_pickdrop_instruction(object, *game_map, instruction);
+	if (instruction.get_size() > 0){
+		if (instruction.buffer[0] == "quit")return 'q';
+		if (instruction.buffer[0] == "help"){ printf("\nLook here -> Look this room\nLook + direction -> Look exits\nLook me -> Look the avatar\nLook inventory -> Show all inventory objects\nLook room objects -> Show all the objects in this room\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\n"); }
+		if (instruction.get_size() > 1){
+			if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction);
+			if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction);
+			if (instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")me->apply_pickdrop_instruction(object, *game_map, instruction);
+		}
+		if (instruction.get_size() > 2){
+		if ((instruction.buffer[0] == "open" || instruction.buffer[0] == "close") && instruction.get_size() == 3 && instruction.buffer[2] == "door")me->apply_door_instruction(*game_map, instruction);
+		}
+	}
 }
 	
 

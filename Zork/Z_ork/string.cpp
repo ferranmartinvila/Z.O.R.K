@@ -24,7 +24,7 @@ string::string(const string& copy){
 
 string::~string(){
 	//error al borrar la cadena per netejar la cadena del vector
-	delete this->STR;
+	//delete STR;
 }
 
 //string lenght
@@ -45,12 +45,21 @@ bool string::empty()const{
 
 //operator ==
 bool string::operator==(const string& string){
-	if (STR == string.STR)return true;
-	else return false;
+	if (strcmp(STR, string.STR))return false;
+	else return true;
 }
 bool string::operator ==(const char* word){
 	if (strcmp(STR, word))return false;
 	else return true;
+}
+//operator !=
+bool string::operator!=(const string& string){
+	if (strcmp(STR, string.STR))return true;
+	else return false;
+}
+bool string::operator !=(const char* word){
+	if (strcmp(STR, word))return true;
+	else return false;
 }
 
 //operator +=
@@ -96,6 +105,7 @@ void string::operator =(const char* string){
 	}
 }
 void string::operator =(const string& string){
+
 	if (string.lenght() < strlen(STR) || max_capacity >= string.max_capacity)
 	{
 		strcpy_s(STR, strlen(STR) + 1, string.STR);
@@ -115,7 +125,7 @@ char* string::operator +(const char* string)const{
 	return STR;
 }
 char* string::operator +(const string& string)const{
-	strcat(STR, string.STR);
+	strcat(strcat({ STR }," "), { string.STR });
 	return STR;
 }
 
@@ -138,6 +148,7 @@ vector<string> tokenize(char* phrase){
 			}
 		}
 	}
+	
 	return instruction;
 }
 

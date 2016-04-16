@@ -1,6 +1,6 @@
-#include"dinamic_array.h"
 #ifndef _cadena_
 #define _cadena_
+#include"dinamic_array.h"
 class string{
 
 public:
@@ -23,7 +23,9 @@ public:
 	char* operator +(const string& string)const;//resultat now sumant class cadena
 	void operator =(const char*string);//operator = //es modifica igualant a class cadena
 	void operator =(const string& string);//es modifica igualnt a class cadena
-	
+	bool operator!=(const char* string);
+	bool operator !=(const string&string);
+
 	void memory_size(unsigned int);
 };
 vector<string> tokenize(char*);//separa l'ordre

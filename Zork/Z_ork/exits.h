@@ -1,6 +1,6 @@
-#include"string.h"
 #ifndef _exits_
 #define _exits_
+#include"string.h"
 class exits{
 public:
 	int room_1, room_2;

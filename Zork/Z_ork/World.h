@@ -1,10 +1,10 @@
+#ifndef _world_
+#define _world_
 #include"string.h"
 #include "character.h"
 #include "map.h"
 #include "item.h"
 #include"dinamic_array.h"
-#ifndef _world_
-#define _world_
 class world{
 public:
 	map*game_map = nullptr;
