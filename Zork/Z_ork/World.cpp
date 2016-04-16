@@ -41,6 +41,8 @@ void world::Initialize(){
 	//Bloody Sword
 	item*Bloody_Sword = new item("Bloody Sword", "A magic red sword. It emits a strange energy that provides a supernatural force at the knight that uses it.", 9);
 	object.push_back(Bloody_Sword);
+
+
 	
 	
 	//CHARACTER
@@ -146,30 +148,31 @@ void world::get_instruction(vector<string>& instruction){
 		me->direction[0] = me->pos_x;
 		me->direction[1] = me->pos_y;
 		//generates a variable with the number of the room that the player is focused and coords of this room
-			if (instruction.buffer[1] == "north")me->direction[1]++;
-			else if (instruction.buffer[1] == "east")me->direction[0]++;
-			else if (instruction.buffer[1] == "south")me->direction[1]--;
-			else if (instruction.buffer[1] == "west")me->direction[0]--;
+		if (instruction.buffer[1] == "north")me->direction[1]++;
+		else if (instruction.buffer[1] == "east")me->direction[0]++;
+		else if (instruction.buffer[1] == "south")me->direction[1]--;
+		else if (instruction.buffer[1] == "west")me->direction[0]--;
 
 
-			//calculates the room where you focus the action and the exit between your room and it
-			for (int k = 0; k < 10; k++){
-				if (game_map->room.buffer[k]->x_cor == me->direction[0] && game_map->room.buffer[k]->y_cor == me->direction[1]){
-					me->next_room = k;
-					k = 9;
-				}
-				else me->next_room = me->inroom;
+		//calculates the room where you focus the action and the exit between your room and it
+		for (int k = 0; k < 10; k++){
+			if (game_map->room.buffer[k]->x_cor == me->direction[0] && game_map->room.buffer[k]->y_cor == me->direction[1]){
+				me->next_room = k;
+				k = 9;
 			}
-			for (int i = 0; i < 9; i++){
-				if ((game_map->exit.buffer[i]->room_1 == me->inroom || game_map->exit.buffer[i]->room_2 == me->inroom) && (game_map->exit.buffer[i]->room_1 == me->next_room || game_map->exit.buffer[i]->room_2 == me->next_room)){
-					me->exit_used = i;
-					i = 9;
-				}
+			else me->next_room = me->inroom;
+		}
+		for (int i = 0; i < 9; i++){
+			if ((game_map->exit.buffer[i]->room_1 == me->inroom || game_map->exit.buffer[i]->room_2 == me->inroom) && (game_map->exit.buffer[i]->room_1 == me->next_room || game_map->exit.buffer[i]->room_2 == me->next_room)){
+				me->exit_used = i;
+				i = 9;
 			}
 		}
 
+
 		//calculates the object you focus
-		if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")&&instruction.get_size()>1){
+		me->object_focused = -1;
+		if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop"||instruction.buffer[0]=="equip"||instruction.buffer[0]=="unequip")){
 			string copy;
 			if (instruction.get_size() == 3){
 				copy = ((instruction.buffer[1] + instruction.buffer[2]));
@@ -177,30 +180,33 @@ void world::get_instruction(vector<string>& instruction){
 			else if (instruction.get_size() == 2){
 				copy = instruction.buffer[1];
 			}
-				for (int n = 0; n < 8; n++){
-					if (copy == object.buffer[n]->name.STR
-						|| instruction.buffer[1] == object.buffer[n]->name.STR){
-						me->object_focused = n;
-						n = 8;
+			for (int n = 0; n < 8; n++){
+				if (copy == object.buffer[n]->name.STR
+					|| instruction.buffer[1] == object.buffer[n]->name.STR){
+					me->object_focused = n;
+					n = 8;
 				}
 			}
 		}
-		else if (instruction.buffer[0] != "quit"&&instruction.buffer[0] != "help")(printf("Invalid comand"));
 	}
+}
 
 char world::apply_order(vector<string>& instruction){
+	int reader = 0;
 	if (instruction.get_size() > 0){
 		if (instruction.buffer[0] == "quit")return 'q';
-		if (instruction.buffer[0] == "help"){ printf("\nLook here -> Look this room\nLook + direction -> Look exits\nLook me -> Look the avatar\nLook inventory -> Show all inventory objects\nLook room objects -> Show all the objects in this room\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\n"); }
+		else if (instruction.buffer[0] == "help"){ printf("\nLook here -> Look this room\nLook + direction -> Look exits\nLook me -> Look the avatar\nLook inventory -> Show all inventory objects\nLook room objects -> Show all the objects in this room\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\nPick + object ->Save object in the inventory\nDrop + object -> Throw object from the inventory\nEquip + object -> Equip object from the inventory\nUnequip + object -> Unequip equiped object and put it in the inventory"); reader++; }
 		if (instruction.get_size() > 1){
-			if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction);
-			if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction);
-			if (instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")me->apply_pickdrop_instruction(object, *game_map, instruction);
-		}
-		if (instruction.get_size() > 2){
-		if ((instruction.buffer[0] == "open" || instruction.buffer[0] == "close") && instruction.get_size() == 3 && instruction.buffer[2] == "door")me->apply_door_instruction(*game_map, instruction);
+			if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction),reader++;
+			else if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction), reader++;
+			else if (instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")me->apply_pickdrop_instruction(object, *game_map, instruction), reader++;
+			else if (instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip")me->apply_equipment_instruction(object, instruction), reader++;
+			if (instruction.get_size() > 2){
+				if ((instruction.buffer[0] == "open" || instruction.buffer[0] == "close") && instruction.get_size() == 3 && instruction.buffer[2] == "door")me->apply_door_instruction(*game_map, instruction), reader++;
+			}
 		}
 	}
+	if (reader == 0)printf("Invalid comand");
 }
 	
 
