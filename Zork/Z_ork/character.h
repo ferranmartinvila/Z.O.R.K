@@ -14,9 +14,15 @@ public:
 	int pos_x, pos_y, inroom, next_room, direction[2], exit_used,object_focused,chest_focused;
 	vector<item*>bag;
 	item* equipation;
-
+	//stats
+	unsigned int live;
+	unsigned int attack;
 	character(){
-
+		pos_x = pos_y = inroom = exit_used = next_room = direction[0] = direction[1] = 0;
+		name = "Earl the knight";
+		description = "You are a brave knight from a far village called Gandar there all the people respects you but here in Bloody Sword nobody knows you.";
+		live = 150;
+		attack = 5;
 	}
 
 	

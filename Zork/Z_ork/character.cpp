@@ -24,7 +24,7 @@ void character::apply_go_instruction(const map& game_map, const vector<string>& 
 void character::apply_look_instruction(vector<item*>& object, const map& game_map,vector<string>& instruction){
 	
 	if (instruction.buffer[1] == "room"&&instruction.get_size() == 2)printf("%s\n%s\n", game_map.rooms.buffer[inroom]->name.STR, game_map.rooms.buffer[inroom]->description.STR);
-	else if (instruction.buffer[1] == "me")printf("%s\n%s", name.STR, description.STR);
+	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]\n", name.STR, description.STR,live,attack);
 	else if (instruction.buffer[1] == "inventory"){
 		for (int n = 0; n < 4; n++){
 			if (n<bag.get_size())printf("Cell %i: %s\n", n, bag.buffer[n]->name.STR);
@@ -183,7 +183,11 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 					object.buffer[object_focused]->state = EQUIPED;
 					object.buffer[object_focused]->location = 15;
 					equipation = object.buffer[object_focused];
+					live += equipation->live_buff;
+					attack += equipation->attack_buff;
 					printf("Now %s is equiped!", equipation->name.STR);
+					if (equipation->attack_buff > 0)printf("+%i attack!",equipation->attack_buff);
+					if (equipation->live_buff > 0)printf("+%i live!", equipation->live_buff);
 				}
 			}
 			else
@@ -191,9 +195,13 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 					if (bag.get_size() < bag.get_capacity()){
 						object.buffer[object_focused]->state = UNEQUIPED;
 						object.buffer[object_focused]->location = bag.get_size()+10;
+						live -= equipation->live_buff;
+						attack -= equipation->attack_buff;
 						bag.push_back(equipation);
 						equipation = nullptr;
 						printf("%s is now in your inventory!", bag.buffer[bag.get_size() - 1]->name.STR);
+						if (object.buffer[object_focused]->attack_buff > 0)printf("-%i attack!", object.buffer[object_focused]->attack_buff);
+						if (object.buffer[object_focused]->live_buff > 0)printf("-%i live!", object.buffer[object_focused]->live_buff);
 					}
 					else printf("You need a free cell to put the unequiped item in the inventory");
 				}

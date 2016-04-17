@@ -12,35 +12,35 @@
 void world::Initialize(){
 	//OBJECTS
 	//Oil Light
-	item*Oil_Light = new item("Oil Light", "An old but usefull oil light.", 1,UNKNOWN);
+	item*Oil_Light = new item("Oil Light", "An old but usefull oil light.", 1,UNKNOWN,0,1);
 	object.push_back(Oil_Light);
 
 	//Golden Dagger
-	item*Golden_Dagger = new item("Golden Dagger", "A little gold Dagger that get the attention of any person that knows about metals.", 4,UNKNOWN);
+	item*Golden_Dagger = new item("Golden Dagger", "A little gold Dagger that get the attention of any person that knows about metals.", 4,UNKNOWN,0,6);
 	object.push_back(Golden_Dagger);
 	
 	//Furnace Key
-	item*Furnace_Key = new item("Furnace Key", "A big and strange key which seems to have been used.", 9,INCHEST);
+	item*Furnace_Key = new item("Furnace Key", "A big and strange key which seems to have been used.", 9,INCHEST,0,3);
 	object.push_back(Furnace_Key);
 	
 	//Marcus Notes
-	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.", 2,UNKNOWN);
+	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.", 2,UNKNOWN,0,0);
 	object.push_back(Marcus_Notes);
 
 	//Raw food
-	item*Raw_food = new item("Raw food", "Food with a quite advanced state of rot. You will be healthier if you don't eat it.", 1,UNKNOWN);
+	item*Raw_food = new item("Raw food", "Food with a quite advanced state of rot. You will be healthier if you don't eat it.", 1,UNKNOWN,0,0);
 	object.push_back(Raw_food);
 
 	//Wine
-	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.", 5,UNKNOWN);
+	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.", 5,UNKNOWN,0,2);
 	object.push_back(Wine);
 
 	//Knight's Sword
-	item*Knight_Sword = new item("Knight Sword", "A huge iron sword full of drawings and with a dragon on the handle.", 0,INCHEST);
+	item*Knight_Sword = new item("Knight Sword", "A huge iron sword full of drawings and with a dragon on the handle.", 0,INCHEST,0,8);
 	object.push_back(Knight_Sword);
 
 	//Bloody Sword
-	item*Bloody_Sword = new item("Bloody Sword", "A magic red sword. It emits a strange energy that provides a supernatural force at the knight that uses it.", 9,INCHEST);
+	item*Bloody_Sword = new item("Bloody Sword", "A magic red sword. It emits a strange energy that provides a supernatural force at the knight that uses it.", 9,INCHEST,100,12);
 	object.push_back(Bloody_Sword);
 
 	//CHESTS
@@ -51,11 +51,7 @@ void world::Initialize(){
 	//Furnace Chest
 	chest*Furnace_Chest = new chest(Bloody_Sword,9);
 	game_map->chests.push_back(Furnace_Chest);
-	
-	//CHARACTER
-	me->pos_x = me->pos_y = me->inroom = me->exit_used = me->next_room = me->direction[0] = me->direction[1] = 0;
-	me->name = "Earl the knight";
-	me->description = "You are a brave knight from a far village called Gandar there all the people respects you but here in Bloody Sword nobody knows you.";
+
 
 	//MAP
 	//ROOMS
@@ -213,7 +209,10 @@ char world::apply_order(vector<string>& instruction){
 	int reader = 0;
 	if (instruction.get_size() > 0){
 		if (instruction.buffer[0] == "quit")return 'q';
-		else if (instruction.buffer[0] == "help"){ printf("\nLook here -> Look this room\nLook + direction -> Look exits\nLook me -> Look the avatar\nLook inventory -> Show all inventory objects\nLook room objects -> Show all the objects in this room\nGo + direction ->Move\nOpen + direction + door -> Open door\nClose + direction + door-> Close door\nPick + object ->Save object in the inventory\nDrop + object -> Throw object from the inventory\nEquip + object -> Equip object from the inventory\nUnequip + object -> Unequip equiped object and put it in the inventory"); reader++; }
+		else if (instruction.buffer[0] == "help"){ printf("\nlook + room -> look this room\nlook + direction -> look + exits\nlook + me -> look the avatar\nlook + inventory -> Show all inventory objects\n"
+			"look + room + objects -> Show all the objects in this room\n\look + inventory -> Show all your bag objects\nlook + chest -> Show all the items in the selected chest\ngo + direction ->Move in the direction\nopen + direction + door -> Open door\nclose + direction + door-> Close door\npick + object ->Save object in the inventory\n"
+			"drop + object -> Throw object from the inventory\nequip + object -> Equip object from the inventory\nunequip + object -> Unequip equiped object and put it in the inventory\n"
+			"get + object + from + chest ->Gets the object from the selected chest\nput + object + into + chest -> Put the selected item into the chest"); reader++; }
 		if (instruction.get_size() > 1){
 			if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction),reader++;
 			else if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction), reader++;
