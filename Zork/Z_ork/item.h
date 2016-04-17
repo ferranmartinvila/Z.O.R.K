@@ -4,8 +4,8 @@
 enum state{
 	EQUIPED,
 	UNEQUIPED,
-	UNKNOWN
-
+	UNKNOWN,
+	INCHEST
 };
 class item :public entity{
 public:
@@ -13,11 +13,11 @@ public:
 	int state;
 	
 
-	item(const string& cpy_name, const string& cpy_description, const int& cpy_location){
+	item(const string& cpy_name, const string& cpy_description, const int& cpy_location,const int& cpy_state){
 		name = cpy_name;
 		description = cpy_description;
 		location = cpy_location;
-		state = UNKNOWN;
+		state = cpy_state;
 	}
 	item(){
 		name.STR = description.STR = nullptr;

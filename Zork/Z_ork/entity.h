@@ -7,5 +7,8 @@ public:
 	~entity(){
 		name.STR = description.STR = nullptr;
 	}
+	virtual void look_it(){
+		printf("%s\n%s\n", name.STR, description.STR);
+	}
 };
 #endif

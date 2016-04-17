@@ -2,12 +2,12 @@
 #define _rooms_
 #include"entity.h"
 #include"string.h"
-class rooms :public entity{
+class room :public entity{
 public:
 	int x_cor, y_cor;
 
 	//constructs the room with the recived data
-	rooms (const string& cpy_name, const string& cpy_description, const int& cpy_x_cor, const int& cpy_y_cor){
+	room (const string& cpy_name, const string& cpy_description, const int& cpy_x_cor, const int& cpy_y_cor){
 		name = cpy_name;
 		description = cpy_description;
 		x_cor = cpy_x_cor;

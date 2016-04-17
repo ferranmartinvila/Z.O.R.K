@@ -2,10 +2,12 @@
 #define _map_
 #include "rooms.h"
 #include "exits.h"
+#include"chest.h"
 #include "dinamic_array.h"
 class map{
 public:
-	vector<rooms*>room;
-	vector<exits*>exit;
+	vector<chest*>chests;
+	vector<room*>rooms;
+	vector<exit*>exits;
 };
 #endif

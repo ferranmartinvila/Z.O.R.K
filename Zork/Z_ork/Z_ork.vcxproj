@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="character.h" />
+    <ClInclude Include="chest.h" />
     <ClInclude Include="dinamic_array.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
