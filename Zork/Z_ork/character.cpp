@@ -23,7 +23,7 @@ void character::apply_go_instruction(const map& game_map, const vector<string>& 
 //look instruction
 void character::apply_look_instruction(vector<item*>& object, const map& game_map,vector<string>& instruction){
 	
-	if (instruction.buffer[1] == "room"&&instruction.get_size()==2)printf("%s\n%s\n", game_map.rooms.buffer[inroom]->name.STR, game_map.rooms.buffer[inroom]->description.STR);
+	if (instruction.buffer[1] == "room"&&instruction.get_size() == 2)printf("%s\n%s\n", game_map.rooms.buffer[inroom]->name.STR, game_map.rooms.buffer[inroom]->description.STR);
 	else if (instruction.buffer[1] == "me")printf("%s\n%s", name.STR, description.STR);
 	else if (instruction.buffer[1] == "inventory"){
 		for (int n = 0; n < 4; n++){
@@ -57,6 +57,18 @@ void character::apply_look_instruction(vector<item*>& object, const map& game_ma
 			object.buffer[object_focused]->look_it();
 		}
 		else printf("This object is out of sight");
+	}
+	else if (chest_focused != -1&&instruction.buffer[1]=="chest"){
+		if (game_map.chests.buffer[chest_focused]->location == inroom){
+			game_map.chests.buffer[chest_focused]->look_it();
+		}
+		else printf("There's no chest here");
+	}
+	else if (instruction.buffer[1] == "equipation"){
+		if (equipation == nullptr){
+			printf("You don't have equiped any item");
+		}
+		else printf("You have equiped %s", equipation->name.STR);
 	}
 	else printf("Invalid Comand");
 }
@@ -152,7 +164,7 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 			if (instruction.buffer[0] == "equip"){
 				if (object.buffer[object_focused]->state == EQUIPED)printf("This object was equiped before");
 				if (object.buffer[object_focused]->state == UNEQUIPED){
-					for (int n = 0; n < 6; n++){
+					for (int n = 0; n < bag.get_capacity()-1; n++){
 						if (bag.buffer[n]->name == object.buffer[object_focused]->name.STR){
 							if (n == bag.get_size() - 1){
 								bag.pop_back();
@@ -204,7 +216,7 @@ void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&obje
 									objects.buffer[object_focused]->state = INCHEST;
 									objects.buffer[object_focused]->location = chests.buffer[chest_focused]->location;
 									chests.buffer[chest_focused]->storage.push_back(objects.buffer[object_focused]);
-									for (int n = bag.get_size()-1; n >0; n--){
+									for (int n = bag.get_size()-1; n >=0; n--){
 										if (bag.buffer[n]->name == objects.buffer[object_focused]->name.STR){
 											if (n == bag.get_size() - 1){
 												bag.pop_back();
@@ -239,11 +251,12 @@ void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&obje
 								objects.buffer[object_focused]->state = UNEQUIPED;
 								objects.buffer[object_focused]->location=bag.get_size()+10;
 								bag.push_back(objects.buffer[object_focused]);
-								for (int k = chests.buffer[chest_focused]->storage.get_size()-1; k >0; k--){
+								for (int k = chests.buffer[chest_focused]->storage.get_size()-1; k >=0; k--){
 									if (chests.buffer[chest_focused]->storage.buffer[k]->name == objects.buffer[object_focused]->name.STR){
 										if (k == chests.buffer[chest_focused]->storage.get_size() - 1){
 											chests.buffer[chest_focused]->storage.pop_back();
-											k = 3;
+											k = -1;
+											printf("You get %s from chest", objects.buffer[object_focused]->name.STR);
 										}
 										else{
 											for (int moves = chests.buffer[chest_focused]->storage.get_size() - (k + 1); moves > 0; moves--){
@@ -251,11 +264,11 @@ void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&obje
 												k++;
 											}
 											chests.buffer[chest_focused]->storage.pop_back();
-											k = 6;
+											printf("You get %s from chest", objects.buffer[object_focused]->name.STR);
+											k = -1;
 										}
 									}
 								}
-								printf("You get %s from chest", objects.buffer[object_focused]->name.STR);
 							}
 							else printf("This chest is empty");
 						}

@@ -15,6 +15,15 @@ public:
 		name = "chest";
 		description = "A blue metallic box with a limited storage of two";
 	}
+	void look_it(){
+		if (storage.get_size() > 0){
+			printf("Chest Storage:\n");
+			for (int k = storage.get_size()-1; k >= 0;k--){
+				printf("  -%s", storage.buffer[k]->name);
+			}
+		}
+		else printf("There's nothing in the chest!");
+	}
 };
 
 #endif

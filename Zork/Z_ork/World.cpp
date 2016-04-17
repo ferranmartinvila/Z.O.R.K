@@ -198,7 +198,7 @@ void world::get_instruction(vector<string>& instruction){
 	}
 	//calculates the chest you focus
 	me->chest_focused = -1;
-	if (instruction.buffer[0] == "put" || instruction.buffer[0] == "get"&&instruction.get_size()>3 && (instruction.buffer[4] == "chest" || instruction.buffer[3] == "chest")){
+	if (((instruction.buffer[0] == "put" || instruction.buffer[0] == "get") && (instruction.buffer[4] == "chest" || instruction.buffer[3] == "chest"))||instruction.buffer[0]=="look"){
 		for (int k = 0; k < 2; k++){
 			if (me->inroom == game_map->chests.buffer[k]->location){
 				me->chest_focused = k;
