@@ -11,7 +11,8 @@
 #include <stdio.h>
 class character :public entity{
 public:
-	int pos_x, pos_y, inroom, next_room, direction[2], exit_used,object_focused,chest_focused;
+	int pos_x, pos_y, inroom, next_room, direction[2], exit_used, object_focused, chest_focused;
+	bool equipation_state;
 	vector<item*>bag;
 	item* equipation;
 	//stats
@@ -24,8 +25,6 @@ public:
 		live = 150;
 		attack = 5;
 	}
-
-	
 	//move instruction
 	void apply_go_instruction(const map&, const vector<string>&);
 	//look instruction

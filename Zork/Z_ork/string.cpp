@@ -23,8 +23,7 @@ string::string(const string& copy){
 }
 
 string::~string(){
-	//error al borrar la cadena per netejar la cadena del vector
-	//delete STR;
+	delete STR;
 }
 
 //string lenght

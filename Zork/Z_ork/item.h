@@ -25,5 +25,8 @@ public:
 	item(){
 		name.STR = description.STR = nullptr;
 	}
+	void look_it(){
+		printf("%s\n%s\nSTATS:\nlive upgrade[+%i]\nattack upgrade[+%i]\n", name.STR, description.STR,live_buff,attack_buff);
+	}
 };
 #endif

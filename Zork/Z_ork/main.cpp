@@ -3,7 +3,9 @@
 #include"dinamic_array.h"
 #include"rooms.h"
 #include<stdio.h>
+#include"leaks.h"
 int main(){
+	ReportMemoryLeaks();
 	//all the data structure
 	world data;
 	//initialize game data
@@ -22,5 +24,6 @@ int main(){
 		//clean the instruction data for the next order
 		instruction.clean();
 	}
+	
 	return 0;
 }

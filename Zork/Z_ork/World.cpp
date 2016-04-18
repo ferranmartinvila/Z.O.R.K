@@ -8,6 +8,7 @@
 #include"item.h"
 #include"chest.h"
 #include"dinamic_array.h"
+#include"character.h"
 
 void world::Initialize(){
 	//OBJECTS
@@ -51,8 +52,7 @@ void world::Initialize(){
 	//Furnace Chest
 	chest*Furnace_Chest = new chest(Bloody_Sword,9);
 	game_map->chests.push_back(Furnace_Chest);
-
-
+	
 	//MAP
 	//ROOMS
 	//Principal Square Data
@@ -139,9 +139,9 @@ void world::get_instruction(vector<string>& instruction){
 	printf("Enter the next action:");
 	gets_s(phrase);
 	string cpy = phrase;
-	if (cpy.lenght()>0){
+	if (cpy.lenght() > 0){
 		instruction = tokenize(phrase);
-}
+	}
 	if (instruction.buffer[0] == "go" || instruction.buffer[0] == "close" || instruction.buffer[0] == "open" || instruction.buffer[0] == "look"){
 		//resets future direction to the actual position to calculate the next room you focus
 		me->direction[0] = me->pos_x;
@@ -170,37 +170,29 @@ void world::get_instruction(vector<string>& instruction){
 			}
 		}
 	}
-
 	//calculates the object you focus
 	me->object_focused = -1;
-	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get"||instruction.buffer[0]=="look")){
-		string word_1;
-		string word_2;
-		if (instruction.get_size() == 3||(instruction.get_size()==5&&instruction.buffer[4]=="chest")){
-			word_1 = instruction.buffer[1];
-			word_2 = instruction.buffer[2];
-			word_1 = word_1 + word_2;
-		}
-		else if (instruction.get_size() == 2 || (instruction.get_size() == 4 && instruction.buffer[3] == "chest")){
-			word_1 = instruction.buffer[1];
-		}
-		for (int n = 0; n < 8; n++){
-			if (word_1 == object.buffer[n]->name.STR
-				|| instruction.buffer[1] == object.buffer[n]->name.STR){
-				me->object_focused = n;
-				n = 8;
+	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look")){
+		if (instruction.buffer[2] != "objects"){
+			if (instruction.get_size() == 3 || (instruction.get_size() == 5 && instruction.buffer[4] == "chest")){
+				instruction.buffer[1] = instruction.buffer[1] + instruction.buffer[2];
+			}
+			for (int n = object.get_size() - 1; n >= 0; n--){
+				if (instruction.buffer[1] == object.buffer[n]->name.STR){
+					me->object_focused = n;
+					n = -1;
+				}
 			}
 		}
-	}
-	//calculates the chest you focus
-	me->chest_focused = -1;
-	if (((instruction.buffer[0] == "put" || instruction.buffer[0] == "get") && (instruction.buffer[4] == "chest" || instruction.buffer[3] == "chest"))||instruction.buffer[0]=="look"){
-		for (int k = 0; k < 2; k++){
-			if (me->inroom == game_map->chests.buffer[k]->location){
-				me->chest_focused = k;
-				k = 2;
+		//calculates the chest you focus
+		me->chest_focused = -1;
+		if (((instruction.buffer[0] == "put" || instruction.buffer[0] == "get") && (instruction.buffer[4] == "chest" || instruction.buffer[3] == "chest")) || instruction.buffer[0] == "look"){
+			for (int k = 0; k < 2; k++){
+				if (me->inroom == game_map->chests.buffer[k]->location){
+					me->chest_focused = k;
+					k = 2;
+				}
 			}
-			else if (k == 1)printf("There's no chest");
 		}
 	}
 }
@@ -210,7 +202,8 @@ char world::apply_order(vector<string>& instruction){
 	if (instruction.get_size() > 0){
 		if (instruction.buffer[0] == "quit")return 'q';
 		else if (instruction.buffer[0] == "help"){ printf("\nlook + room -> look this room\nlook + direction -> look + exits\nlook + me -> look the avatar\nlook + inventory -> Show all inventory objects\n"
-			"look + room + objects -> Show all the objects in this room\n\look + inventory -> Show all your bag objects\nlook + chest -> Show all the items in the selected chest\ngo + direction ->Move in the direction\nopen + direction + door -> Open door\nclose + direction + door-> Close door\npick + object ->Save object in the inventory\n"
+			"look + room + objects -> Show all the objects in this room\n\look + inventory -> Show all your bag objects\nlook + chest -> Show all the items in the selected chest\nlook + item -> Show all item data"
+			"go + direction ->Move in the direction\nopen + direction + door -> Open door\nclose + direction + door-> Close door\npick + object ->Save object in the inventory\n"
 			"drop + object -> Throw object from the inventory\nequip + object -> Equip object from the inventory\nunequip + object -> Unequip equiped object and put it in the inventory\n"
 			"get + object + from + chest ->Gets the object from the selected chest\nput + object + into + chest -> Put the selected item into the chest"); reader++; }
 		if (instruction.get_size() > 1){
