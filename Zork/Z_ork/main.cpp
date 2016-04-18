@@ -12,12 +12,11 @@ int main(){
 	data.Initialize();
 	//vector of strings for the user input
 	vector<string> instruction;
-	
+	bool option=true;
 	//game bucle
-	char option = 0;
-	while (option != 'q'){
+	while (option){
 		//gets user input and tokenize it
-		printf("\n");
+		printf("\n\n");
 		data.get_instruction(instruction);
 		//apply the user instruction
 		option = data.apply_order(instruction);

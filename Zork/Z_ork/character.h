@@ -11,9 +11,19 @@
 #include <stdio.h>
 class character :public entity{
 public:
-	int pos_x, pos_y, inroom, next_room, direction[2], exit_used, object_focused, chest_focused;
+	int pos_x, pos_y, inroom;
+	//the next room you focus the action
+	int next_room;
+	//the direction x & y where is the next room
+	int direction[2];
+	//the exit that is between your room and the next room
+	int exit_used;
+	//the object and the chest you focus
+	int object_focused, chest_focused;
+
+	//is true if your equipation cell is free
 	bool equipation_state;
-	vector<item*>bag;
+	vector<item*> bag;
 	item* equipation;
 	//stats
 	unsigned int live;

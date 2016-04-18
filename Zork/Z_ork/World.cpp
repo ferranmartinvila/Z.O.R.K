@@ -1,14 +1,9 @@
 #define _CRT_SECURE_NO_WARNINGS
-#include"World.h"
-#include"string.h"
-#include<string.h>
-#include<stdio.h>
-#include"rooms.h"
-#include"exits.h"
-#include"item.h"
-#include"chest.h"
-#include"dinamic_array.h"
-#include"character.h"
+#include "World.h"
+#include "string.h"
+#include <string.h>
+#include <stdio.h>
+#include "dinamic_array.h"
 
 void world::Initialize(){
 	//OBJECTS
@@ -143,7 +138,7 @@ void world::get_instruction(vector<string>& instruction){
 		instruction = tokenize(phrase);
 	}
 	if (instruction.buffer[0] == "go" || instruction.buffer[0] == "close" || instruction.buffer[0] == "open" || instruction.buffer[0] == "look"){
-		//resets future direction to the actual position to calculate the next room you focus
+		//resets future direction from the actual position to calculate the next room you focus
 		me->direction[0] = me->pos_x;
 		me->direction[1] = me->pos_y;
 		me->next_room = me->inroom;
@@ -174,9 +169,11 @@ void world::get_instruction(vector<string>& instruction){
 	me->object_focused = -1;
 	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look")){
 		if (instruction.buffer[2] != "objects"){
+			//if item is a composed name the two strings that compose it are fusioned 
 			if (instruction.get_size() == 3 || (instruction.get_size() == 5 && instruction.buffer[4] == "chest")){
 				instruction.buffer[1] = instruction.buffer[1] + instruction.buffer[2];
 			}
+			//calculates the object you focus
 			for (int n = object.get_size() - 1; n >= 0; n--){
 				if (instruction.buffer[1] == object.buffer[n]->name.STR){
 					me->object_focused = n;
@@ -197,29 +194,35 @@ void world::get_instruction(vector<string>& instruction){
 	}
 }
 
-char world::apply_order(vector<string>& instruction){
+bool world::apply_order(vector<string>& instruction){
 	int reader = 0;
+	//only quit & help have a size of 1 word instruction
 	if (instruction.get_size() > 0){
-		if (instruction.buffer[0] == "quit")return 'q';
+		if (instruction.buffer[0] == "quit")return false;
 		else if (instruction.buffer[0] == "help"){ printf("\nlook + room -> look this room\nlook + direction -> look + exits\nlook + me -> look the avatar\nlook + inventory -> Show all inventory objects\n"
 			"look + room + objects -> Show all the objects in this room\n\look + inventory -> Show all your bag objects\nlook + chest -> Show all the items in the selected chest\nlook + item -> Show all item data"
 			"go + direction ->Move in the direction\nopen + direction + door -> Open door\nclose + direction + door-> Close door\npick + object ->Save object in the inventory\n"
 			"drop + object -> Throw object from the inventory\nequip + object -> Equip object from the inventory\nunequip + object -> Unequip equiped object and put it in the inventory\n"
 			"get + object + from + chest ->Gets the object from the selected chest\nput + object + into + chest -> Put the selected item into the chest"); reader++; }
+		//go,look,pick,drop,equip,unequip have to get bigger than 1 word instruction
 		if (instruction.get_size() > 1){
 			if (instruction.buffer[0] == "go")me->apply_go_instruction(*game_map, instruction),reader++;
 			else if (instruction.buffer[0] == "look")me->apply_look_instruction(object, *game_map, instruction), reader++;
 			else if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop")&& instruction.get_size() < 4)me->apply_pickdrop_instruction(object, *game_map, instruction), reader++;
 			else if (instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip")me->apply_equipment_instruction(object, instruction), reader++;
+			//open,close have to get bigger than 2 words instruction
 			if (instruction.get_size() > 2){
 				if ((instruction.buffer[0] == "open" || instruction.buffer[0] == "close") && instruction.get_size() == 3 && instruction.buffer[2] == "door")me->apply_door_instruction(*game_map, instruction), reader++;
+				//put,get have to get bigger that 3 words instruction
 				if (instruction.get_size() > 3){
 					if ((instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into")) || (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from")))me->apply_chest_instruction(game_map->chests, object, instruction),reader++;
 				}
 			}
 		}
 	}
-	if (reader == 0)printf("Invalid comand");
+	return true;
+	//if the size of the instruction is not the respective for the action Invalid Comand alert is printed
+	if (reader == 0)printf("Invalid Comand");
 }
 	
 

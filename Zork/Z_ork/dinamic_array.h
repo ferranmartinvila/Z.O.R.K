@@ -1,6 +1,6 @@
 #ifndef _dinamic_array_
 #define _dinamic_array_
-#include<stdio.h>
+#include <stdio.h>
 template<class type>
 class vector{
 private:
@@ -8,7 +8,7 @@ private:
 	unsigned int capacity;
 	unsigned int elements;
 public:
-	type*buffer;
+	type* buffer;
 
 
 	//copy constructor

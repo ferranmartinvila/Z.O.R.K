@@ -10,16 +10,21 @@ public:
 	map*game_map = nullptr;
 	character*me = nullptr;
 	vector<item*>object;
+	//world constructor
 	world(){
 		game_map = new map;
 		me = new character;
 	}
+	//world destructor
 	~world(){
 		delete me;
 		delete game_map;
 	}
+	//initialize word function
 	void Initialize();
-	char apply_order(vector<string>& );
+	//apply the order the the user enter 
+	bool apply_order(vector<string>& );
+	//read the order that the user enter
 	void get_instruction(vector<string>&);
 };
 #endif

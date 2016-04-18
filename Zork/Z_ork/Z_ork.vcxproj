@@ -75,7 +75,6 @@
     <ClInclude Include="dinamic_array.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
-    <ClInclude Include="globals.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="leaks.h" />
     <ClInclude Include="map.h" />

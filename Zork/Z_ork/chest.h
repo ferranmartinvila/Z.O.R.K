@@ -1,13 +1,17 @@
 #ifndef _chest_
 #define _chest_
-#include"entity.h"
-#include"dinamic_array.h"
-#include"item.h"
+#include "entity.h"
+#include "dinamic_array.h"
+#include "item.h"
 class chest :public entity{
 public:
+	//chest storage
 	vector<item*>storage;
+	//chest capacity limitation
 	unsigned int capacity;
 	int location;
+
+	//chest copy consttructor
 	chest(item* object, int cpy_location){
 		storage.push_back(object);
 		capacity = 2;
@@ -15,6 +19,7 @@ public:
 		name = "chest";
 		description = "A blue metallic box with a limited storage of two";
 	}
+	//look it virtual function
 	void look_it(){
 		if (storage.get_size() > 0){
 			printf("Chest Storage:\n");

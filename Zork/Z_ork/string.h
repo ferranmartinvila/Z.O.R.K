@@ -1,6 +1,6 @@
-#ifndef _cadena_
-#define _cadena_
-#include"dinamic_array.h"
+#ifndef _string_
+#define _string_
+#include "dinamic_array.h"
 class string{
 
 public:

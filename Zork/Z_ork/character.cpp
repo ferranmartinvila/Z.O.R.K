@@ -15,22 +15,31 @@ void character::apply_go_instruction(const map& game_map, const vector<string>& 
 		else if (game_map.exits.buffer[exit_used]->door_state == false){
 			printf("\nThe %s %s door is closed.", instruction.buffer[1].STR, game_map.rooms.buffer[inroom]->name);
 		}
+		//if no room concides with the direction is significates that there's no
 		else printf("There's anything there.");
 	}
+	//if next_room is -1 it significates that the direction word has been entered wrongly
 	else printf("Invalid direction");
 }
 
 //look instruction
 void character::apply_look_instruction(vector<item*>& object, const map& game_map,vector<string>& instruction){
 	
-	if (instruction.buffer[1] == "room"&&instruction.get_size() == 2)printf("%s\n%s\n", game_map.rooms.buffer[inroom]->name.STR, game_map.rooms.buffer[inroom]->description.STR);
-	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]\n", name.STR, description.STR,live,attack);
+	//look room operator
+	if (instruction.buffer[1] == "room"&&instruction.get_size() == 2)printf("%s\n%s", game_map.rooms.buffer[inroom]->name.STR, game_map.rooms.buffer[inroom]->description.STR);
+	
+	//look me operator
+	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]", name.STR, description.STR,live,attack);
+	
+	//look inventory operator
 	else if (instruction.buffer[1] == "inventory"){
 		for (int n = 0; n < 4; n++){
 			if (n<bag.get_size())printf("Cell %i: %s\n", n, bag.buffer[n]->name.STR);
 		}
 		if(bag.get_size()==0) printf("The inventory is empty.");
 	}
+	
+	//look room objects operator
 	else if (instruction.buffer[1] == "room"&&instruction.buffer[2] == "objects"){
 		int j = 8;
 		for (int n = 0; n < 8; n++){
@@ -47,23 +56,31 @@ void character::apply_look_instruction(vector<item*>& object, const map& game_ma
 		}
 		if (j == 0)printf("There's no objects here");
 	}
+	
+	//look exit operator
 	else if (instruction.buffer[1] == "west" || instruction.buffer[1] == "south" || instruction.buffer[1] == "north" || instruction.buffer[1] == "east"){
 		if ((inroom == game_map.exits.buffer[exit_used]->room_2) && (next_room == game_map.exits.buffer[exit_used]->room_1))printf("%s", game_map.exits.buffer[exit_used]->description_2.STR);
 		else if ((inroom == game_map.exits.buffer[exit_used]->room_1) && (next_room == game_map.exits.buffer[exit_used]->room_2))printf("%s", game_map.exits.buffer[exit_used]->description_1.STR);
 		else printf("There's nothing there.");
 	}
+	
+	//look object operator
 	else if (object_focused != -1){	
 		if ((object.buffer[object_focused]->location == inroom||object.buffer[object_focused]->location>9)&&(object.buffer[object_focused]->state!=INCHEST)){
 			object.buffer[object_focused]->look_it();
 		}
 		else printf("This object is out of sight");
 	}
+	
+	//look chest operator
 	else if (chest_focused != -1&&instruction.buffer[1]=="chest"){
 		if (game_map.chests.buffer[chest_focused]->location == inroom){
 			game_map.chests.buffer[chest_focused]->look_it();
 		}
 	}
 	else if(chest_focused==-1)printf("There's no chest here");
+	
+	//look equipation operator
 	else if (instruction.buffer[1] == "equipation"){
 		if (equipation == nullptr){
 			printf("You don't have equiped any item");
@@ -75,10 +92,13 @@ void character::apply_look_instruction(vector<item*>& object, const map& game_ma
 
 //open/close instruction
 void character::apply_door_instruction(map& game_map, const vector<string>& instruction){
+	//if next_room is -1 it significates that the direction word has been entered wrongly
 	if (next_room != -1){
+		//if there's no door where apply the action
 		if (game_map.exits.buffer[exit_used]->door == false){
 			printf("There's no door.");
 		}
+		//apply action to an opened door
 		else if (game_map.exits.buffer[exit_used]->door_state == true){
 			//open
 			if (instruction.buffer[0] == "open"){
@@ -90,6 +110,7 @@ void character::apply_door_instruction(map& game_map, const vector<string>& inst
 				printf("Now the %s door from %s is closed!", instruction.buffer[1].STR, game_map.rooms.buffer[inroom]->name.STR);
 			}
 		}
+		//apply action to an close door
 		else{
 			//open
 			if (instruction.buffer[0] == "open"){
@@ -107,10 +128,10 @@ void character::apply_door_instruction(map& game_map, const vector<string>& inst
 
 //pick/drop instruction
 void character::apply_pickdrop_instruction(vector<item*>& object, map& game_map, const vector<string>& instruction){
+	//if object focused is -1 it significates that the name object has been entered wrongly 
 	if (object_focused != -1){
 
 		//pick operator
-
 		if (instruction.buffer[0] == "pick"){
 			if (inroom != object.buffer[object_focused]->location&&object.buffer[object_focused]->state == UNKNOWN)printf("This object is in another room!");
 			else if (object.buffer[object_focused]->state == EQUIPED || object.buffer[object_focused]->state == UNEQUIPED)printf("You already have this object!");
@@ -119,6 +140,7 @@ void character::apply_pickdrop_instruction(vector<item*>& object, map& game_map,
 				object.buffer[object_focused]->state = UNEQUIPED;
 				object.buffer[object_focused]->location = bag.get_size()+10;
 				if (bag.get_size() < bag.get_capacity()){
+					//add the item into the bag
 					bag.push_back(object.buffer[object_focused]);
 					printf("Now the %s is in your inventory!", bag.buffer[bag.get_size() - 1]->name.STR);
 				}
@@ -133,6 +155,7 @@ void character::apply_pickdrop_instruction(vector<item*>& object, map& game_map,
 			else if (object.buffer[object_focused]->state == UNKNOWN)printf("This object is not inside your bag!");
 			else{
 				object.buffer[object_focused]->location = inroom;
+				//reorganice the bag cells
 				for (int n = bag.get_size()-1; n >=0; n--){
 					if (bag.buffer[n]->name == object.buffer[object_focused]->name.STR&&bag.buffer[n]->state == UNEQUIPED){
 						if (n == bag.get_size() - 1){
@@ -159,12 +182,15 @@ void character::apply_pickdrop_instruction(vector<item*>& object, map& game_map,
 
 //equip/unequip instruction
 void character::apply_equipment_instruction(vector<item*>& object, const vector<string>& instruction){
+	//if object focused is -1 it significates that the name object has been entered wrongly 
 	if (object_focused != -1){
 		if (object.buffer[object_focused]->state != UNKNOWN && object.buffer[object_focused]->state != INCHEST){
+			//equip operator
 			if (instruction.buffer[0] == "equip"){
 				if (equipation_state)printf("You have to unequip the current object before equip other");
 				else if (object.buffer[object_focused]->state == EQUIPED)printf("This object was equiped before");
 				else if (object.buffer[object_focused]->state == UNEQUIPED){
+					//reorganize the bag cells
 					for (int n = 0; n < bag.get_capacity()-1; n++){
 						if (bag.buffer[n]->name == object.buffer[object_focused]->name.STR){
 							if (n == bag.get_size() - 1){
@@ -181,6 +207,7 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 							}
 						}
 					}
+					//equip the object 
 					equipation_state = true;
 					object.buffer[object_focused]->state = EQUIPED;
 					object.buffer[object_focused]->location = 15;
@@ -192,9 +219,11 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 					if (equipation->live_buff > 0)printf("+%i live!", equipation->live_buff);
 				}
 			}
+			//unequip operator
 			else
 				if (object.buffer[object_focused]->state == EQUIPED){
 					if (bag.get_size() < bag.get_capacity()){
+						//unequip the object
 						equipation_state = false;
 						object.buffer[object_focused]->state = UNEQUIPED;
 						object.buffer[object_focused]->location = bag.get_size()+10;
@@ -216,7 +245,9 @@ void character::apply_equipment_instruction(vector<item*>& object, const vector<
 }
 
 void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&objects,const vector<string>&instruction){
+	//if chest focused is -1 it seems that the word "chest" has been entered wrongly
 	if (chest_focused != -1){
+		//if object focused is -1 it significates that the name object has been entered wrongly 
 		if (object_focused != -1){
 				//put operator
 				if (instruction.buffer[0] == "put"){
@@ -224,9 +255,11 @@ void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&obje
 						if (objects.buffer[object_focused]->state != UNKNOWN){
 							if (objects.buffer[object_focused]->state != EQUIPED){
 								if (chests.buffer[chest_focused]->storage.get_size() < chests.buffer[chest_focused]->capacity){
+									//put the object in the selected chest
 									objects.buffer[object_focused]->state = INCHEST;
 									objects.buffer[object_focused]->location = chests.buffer[chest_focused]->location;
 									chests.buffer[chest_focused]->storage.push_back(objects.buffer[object_focused]);
+									//reorganize the bag cells
 									for (int n = bag.get_size()-1; n >=0; n--){
 										if (bag.buffer[n]->name == objects.buffer[object_focused]->name.STR){
 											if (n == bag.get_size() - 1){
@@ -255,13 +288,14 @@ void character::apply_chest_instruction(vector<chest*>&chests,vector<item*>&obje
 				}
 				//get operator
 				else if (bag.get_size() < bag.get_capacity()){
-
 					if (objects.buffer[object_focused]->state != UNKNOWN&&objects.buffer[object_focused]->location==inroom){
 						if (objects.buffer[object_focused]->state != UNEQUIPED){
 							if (chests.buffer[chest_focused]->storage.get_size() != 0){
+								//get the object from the selected chest
 								objects.buffer[object_focused]->state = UNEQUIPED;
 								objects.buffer[object_focused]->location=bag.get_size()+10;
 								bag.push_back(objects.buffer[object_focused]);
+								//reorganize the chest cells
 								for (int k = chests.buffer[chest_focused]->storage.get_size()-1; k >=0; k--){
 									if (chests.buffer[chest_focused]->storage.buffer[k]->name == objects.buffer[object_focused]->name.STR){
 										if (k == chests.buffer[chest_focused]->storage.get_size() - 1){
