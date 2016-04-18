@@ -1,19 +1,11 @@
-﻿# Zork
-Zork the videogame
-Zork is one of the earliest interactive fiction computer games, with roots drawn from the original genre game, Colossal Cave Adventure.
+Zork -> Version 2
+By Ferran Martin Vila
 
-###### This is a tribute to the original Zork. This tribute has been done by a student of the CITM. Name: Ferran Marín Vilà
+-Zork game with a game map composed by rooms and exits that can get items and chests inside. Now the player can 
+move all arround the map changing the doors states and playing with the objects. If the player equips a object it will
+revie its stats upgrades.
 
-### Instructions:
-######How to Play:
-
-1rs step -> enter a comand. Then the program shows you the result and you have to press any bottom
-for skip it one time you read the message. Then the program is ready for read other instruction,etc.
-
-For exit enter "quit".
-
-
-######Comands:
+All this instructions can be introcuded:
 
 
 look + room -> look this room
@@ -49,6 +41,4 @@ unequip + object -> Unequip equiped object and put it in the inventory
 get + object + from + chest ->Gets the object from the selected chest
 
 put + object + into + chest -> Put the selected item into the chest
-
-
 
