@@ -24,6 +24,7 @@ string::string(const string& copy){
 
 string::~string(){
 	delete STR;
+	STR = nullptr;
 }
 
 //string lenght
@@ -40,6 +41,17 @@ const char* string::c_str()const{
 bool string::empty()const{
 	if (strlen(STR))return true;
 	else return false;
+}
+
+bool string::erase(){
+	delete STR;
+	STR = nullptr;
+	return true;
+}
+
+//get string
+char* string::get_string(){
+	return STR;
 }
 
 //operator ==

@@ -1,11 +1,12 @@
 #ifndef _string_
 #define _string_
-#include "dinamic_array.h"
+#include "vector.h"
 class string{
 
-public:
+private:
 	char* STR = nullptr;
 	unsigned int max_capacity;
+public:
 	string();
 	string(const char*cadena);
 	string(const string& copy);
@@ -15,6 +16,7 @@ public:
 	unsigned int lenght()const;
 	const char*c_str()const;
 	bool empty()const;
+	bool erase();
 	bool operator ==(const string& string);
 	bool operator ==(const char* string);
 	void operator +=(const char*string);//es suma a si mateix amb una cadena
@@ -25,7 +27,7 @@ public:
 	void operator =(const string& string);//es modifica igualnt a class cadena
 	bool operator!=(const char* string);
 	bool operator !=(const string&string);
-
+	char* get_string();
 	void memory_size(unsigned int);
 };
 vector<string> tokenize(char*);//separa l'ordre

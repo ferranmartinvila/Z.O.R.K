@@ -3,7 +3,7 @@
 #include "rooms.h"
 #include "exits.h"
 #include "chest.h"
-#include "dinamic_array.h"
+#include "vector.h"
 class map{
 public:
 	vector<chest*>chests;

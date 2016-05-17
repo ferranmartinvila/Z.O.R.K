@@ -53,13 +53,16 @@
     <ClInclude Include="string.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
-    <ClInclude Include="dinamic_array.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
     <ClInclude Include="chest.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
     <ClInclude Include="leaks.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
+    <ClInclude Include="simple_list.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
   </ItemGroup>

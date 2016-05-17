@@ -13,6 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{073FF1A2-3A5B-4D2C-A6F2-1FBA9263E2F5}</ProjectGuid>
     <RootNamespace>Z_ork</RootNamespace>
+    <ProjectName>Zork</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -72,7 +73,8 @@
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="chest.h" />
-    <ClInclude Include="dinamic_array.h" />
+    <ClInclude Include="simple_list.h" />
+    <ClInclude Include="vector.h" />
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
     <ClInclude Include="item.h" />

@@ -6,7 +6,7 @@
 #include "string.h"
 #include "item.h"
 #include "chest.h"
-#include "dinamic_array.h"
+#include "vector.h"
 #include "string.h"
 #include <stdio.h>
 class character :public entity{
@@ -31,21 +31,47 @@ public:
 	character(){
 		pos_x = pos_y = inroom = exit_used = next_room = direction[0] = direction[1] = 0;
 		name = "Earl the knight";
-		description = "You are a brave knight from a far village called Gandar there all the people respects you but here in Bloody Sword nobody knows you.";
+		description = "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.";
 		live = 150;
 		attack = 5;
 	}
+	~character(){
+		/*
+		name.erase();
+		description.erase();
+		direction[0] = NULL;
+		direction[1] = NULL;
+		equipation = nullptr;
+		bag.clean();*/
+	}
 	//move instruction
 	void apply_go_instruction(const map&, const vector<string>&);
+	
 	//look instruction
 	void apply_look_instruction(vector<item*>&, const map&,vector<string>&);
-	//open/close instruction
-	void apply_door_instruction(map&, const vector<string>&);
-	//pick/drop instruction
-	void apply_pickdrop_instruction(vector<item*>&, map&, const vector<string>&);
-	//equip/unequip instruction
-	void apply_equipment_instruction(vector<item*>&, const vector<string>&);
-	//put/get instruction
-	void apply_chest_instruction(vector<chest*>&, vector<item*>&, const vector<string>&);
+	
+	//open door instruction
+	bool apply_open_door_instruction(map&, const vector<string>&);
+	
+	//close door instruction
+	bool apply_close_door_instruction(map&, const vector<string>&);
+	
+	//pick instruction
+	bool apply_pick_instruction(vector<item*>&, map&);
+	
+	//drop instruction
+	bool apply_drop_instruction(vector<item*>&, map&);
+	
+	//equip instruction
+	bool apply_equip_instruction(vector<item*>&);
+	
+	//unequip instruction
+	bool apply_unequip_instruction(vector<item*>&);
+
+	//put instruction
+	bool apply_put_instruction(vector<chest*>&, vector<item*>&);
+	
+	//get instruction
+	bool apply_get_instruction(vector<chest*>&, vector<item*>&);
 };
 #endif

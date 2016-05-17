@@ -1,6 +1,6 @@
 #include"World.h"
 #include"string.h"
-#include"dinamic_array.h"
+#include "vector.h"
 #include"rooms.h"
 #include<stdio.h>
 #include"leaks.h"

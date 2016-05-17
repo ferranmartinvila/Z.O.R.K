@@ -1,18 +1,34 @@
 #ifndef _entity_
 #define _entity_
 #include "string.h"
+#include "simple_list.h"
+enum type{
+	CHARACTER,
+	MAP,
+	ROOM,
+	EXIT,
+	CHEST,
+	ITEM,
+	UNDEFINED
+};
+
 class entity{
 public:
-	string name, description;
-
-
+	//entity data
+	string name;
+	string description;
+	list<entity*> data;
+public:
 	//entity destructor
 	~entity(){
-		name.STR = description.STR = nullptr;
+		name.erase();
+		description.erase();
+		data.clean();
 	}
 	//entity virtual look it function
 	virtual void look_it(){
-		printf("%s\n\n%s", name.STR, description.STR);
+		printf("%s\n\n%s", name.get_string(), description.get_string());
 	}
+	//virtual bool update();
 };
 #endif

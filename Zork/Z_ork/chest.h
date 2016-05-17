@@ -1,7 +1,7 @@
 #ifndef _chest_
 #define _chest_
 #include "entity.h"
-#include "dinamic_array.h"
+#include "vector.h"
 #include "item.h"
 class chest :public entity{
 public:
@@ -18,6 +18,11 @@ public:
 		location = cpy_location;
 		name = "chest";
 		description = "A blue metallic box with a limited storage of two";
+	}
+	~chest(){
+		/*storage.clean();
+		name.erase();
+		description.erase();*/
 	}
 	//look it virtual function
 	void look_it(){

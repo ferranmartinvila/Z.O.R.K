@@ -4,7 +4,7 @@
 #include "character.h"
 #include "map.h"
 #include "item.h"
-#include"dinamic_array.h"
+#include "vector.h"
 class world{
 public:
 	map*game_map = nullptr;
@@ -17,8 +17,7 @@ public:
 	}
 	//world destructor
 	~world(){
-		delete me;
-		delete game_map;
+		object.clean();
 	}
 	//initialize word function
 	void Initialize();
