@@ -15,6 +15,7 @@ enum type{
 class entity{
 public:
 	//entity data
+	unsigned int type;
 	string name;
 	string description;
 	list<entity*> data;

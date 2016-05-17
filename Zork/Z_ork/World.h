@@ -10,6 +10,7 @@ public:
 	map*game_map = nullptr;
 	character*me = nullptr;
 	vector<item*>object;
+	vector<entity*>game_data;
 	//world constructor
 	world(){
 		game_map = new map;
@@ -18,6 +19,7 @@ public:
 	//world destructor
 	~world(){
 		object.clean();
+		game_data.clean();
 	}
 	//initialize word function
 	void Initialize();

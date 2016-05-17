@@ -1,7 +1,8 @@
 #ifndef _exits_
 #define _exits_
 #include"string.h"
-class exit{
+#include "entity.h"
+class exit:public entity{
 public:
 	//the rooms that the exit connects
 	int room_1, room_2;
