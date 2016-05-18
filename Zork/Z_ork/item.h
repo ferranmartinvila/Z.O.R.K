@@ -22,6 +22,7 @@ public:
 		state = cpy_state;
 		live_buff = cpy_live;
 		attack_buff = cpy_attack;
+		type = ITEM;
 	}
 	//default item constructor
 	/*~item(){

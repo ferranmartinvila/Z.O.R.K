@@ -12,6 +12,7 @@ public:
 		description = cpy_description;
 		x_cor = cpy_x_cor;
 		y_cor = cpy_y_cor;
+		type = ROOM;
 	}
 };
 

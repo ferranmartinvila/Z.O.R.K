@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdio.h>
 #include "vector.h"
+#include "character.h"
 
 void world::Initialize(){
 	//OBJECTS
@@ -160,7 +161,16 @@ void world::Initialize(){
 }
 
 void world::get_instruction(vector<string>& instruction){
-
+	/*//player pointer
+	entity* p = game_data.buffer[0];
+	character*player =nullptr;
+	for (int k = 0; k < MAX_ENTITY; k++){
+		if (p->type == type::CHARACTER){
+			player=((character*)p)->;
+			break;
+		}
+		p++;
+	}*/
 	//array that contain all de phrase characters
 	char phrase[40];
 	printf("Enter the next action:");
@@ -227,6 +237,15 @@ void world::get_instruction(vector<string>& instruction){
 }
 
 bool world::apply_order(vector<string>& instruction){
+	entity* p = game_data.buffer[0];
+	character*player = nullptr;
+	for (int k = 0; k < MAX_ENTITY; k++){
+		if (p->type == type::CHARACTER){
+			player = (character*)p;
+			break;
+		}
+		p++;
+	}
 	int reader = false;
 	//quit instruction
 	if (instruction.buffer[0] == "quit")return false;

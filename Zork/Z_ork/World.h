@@ -1,10 +1,11 @@
 #ifndef _world_
 #define _world_
 #include"string.h"
-#include "character.h"
 #include "map.h"
 #include "item.h"
 #include "vector.h"
+#include "character.h"
+#define MAX_ENTITY 29
 class world{
 public:
 	map*game_map = nullptr;

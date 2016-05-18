@@ -19,6 +19,7 @@ public:
 		description_2 = cpy_description_2;
 		door = cpy_door;
 		door_state = cpy_door_state;
+		type = EXIT;
 	}
 };
 #endif

@@ -34,6 +34,7 @@ public:
 		description = "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.";
 		live = 150;
 		attack = 5;
+		type = CHARACTER;
 	}
 	~character(){
 		/*

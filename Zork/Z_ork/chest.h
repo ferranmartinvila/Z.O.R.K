@@ -18,6 +18,7 @@ public:
 		location = cpy_location;
 		name = "chest";
 		description = "A blue metallic box with a limited storage of two";
+		type = CHEST;
 	}
 	~chest(){
 		/*storage.clean();

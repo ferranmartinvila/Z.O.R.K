@@ -2,7 +2,7 @@
 #include "map.h"
 #include "item.h"
 #include "chest.h"
-
+#include "World.h"
 //move instruction
 void character::apply_go_instruction(const map& game_map, const vector<string>& instruction){
 	if (next_room != -1){
