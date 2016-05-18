@@ -1,20 +1,21 @@
 #ifndef _dinamic_array_
 #define _dinamic_array_
 #include <stdio.h>
-template<class type>
+#include <assert.h>
+template<class TYPE>
 class vector{
 private:
 
 	unsigned int capacity;
 	unsigned int elements;
 public:
-	type* buffer;
+	TYPE* buffer;
 
 
 	//copy constructor
 	vector(const vector& copy){
 		elements = copy.elements;
-		buffer = new type[elements];
+		buffer = new TYPE[elements];
 		for (unsigned int i = 0; i <= elements-1; i++){
 				buffer[i] = copy.buffer[i];
 			
@@ -25,14 +26,15 @@ public:
 	vector(){
 		capacity = 6;
 		elements = 0;
-		buffer = new type[capacity];
+		buffer = new TYPE[capacity];
 	}
+	
 
 	//push back
-	void push_back(const type& element){
+	void push_back(const TYPE& element){
 		if (elements == capacity){
 			capacity *= 2;
-			type *copy = new type[capacity];
+			TYPE *copy = new TYPE[capacity];
 			for (unsigned int k = 0; k < elements; k++){
 				copy[k] = buffer[k];
 			}
@@ -44,10 +46,10 @@ public:
 	}
 
 	//push front
-	void push_front(const type& element){
+	void push_front(const TYPE& element){
 		if (elements + 1 == capacity){
 			capacity = capacity * 2;;
-			type *copy = new type[capacity];
+			TYPE *copy = new TYPE[capacity];
 			for (unsigned int k = 0; k < elements; k++){
 				copy[k] = buffer[k];
 			}
@@ -85,6 +87,5 @@ public:
 	void pop_back(){
 		elements--;
 	}
-
 };
 #endif

@@ -15,13 +15,9 @@ public:
 	int live_buff;
 	int attack_buff;
 	//copy item constructor
-	item(const string& cpy_name, const string& cpy_description,int cpy_location,int cpy_state,int cpy_live,int cpy_attack){
+	item(const string& cpy_name, const string& cpy_description, int location, int state, int live_buff, int attack_buff):location(location), state(state), live_buff(live_buff), attack_buff(attack_buff){
 		name = cpy_name;
 		description = cpy_description;
-		location = cpy_location;
-		state = cpy_state;
-		live_buff = cpy_live;
-		attack_buff = cpy_attack;
 		type = ITEM;
 	}
 	//default item constructor

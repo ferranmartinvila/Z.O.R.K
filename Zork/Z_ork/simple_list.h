@@ -1,5 +1,6 @@
 #ifndef _SIMPLE_LIST_
 #define _SIMLPE_LIST_
+#include <assert.h>
 //VECTOR OF NODES
 template<class type>
 class list{
@@ -16,7 +17,7 @@ public:
 	};
 
 	node* first_element = nullptr;
-
+	
 	//FUNCTIONS
 	//empty function
 	bool empty(){

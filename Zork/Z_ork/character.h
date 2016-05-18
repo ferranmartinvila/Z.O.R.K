@@ -29,7 +29,9 @@ public:
 	unsigned int live;
 	unsigned int attack;
 	character(){
-		pos_x = pos_y = inroom = exit_used = next_room = direction[0] = direction[1] = 0;
+		pos_x = pos_y = exit_used = direction[0] = direction[1] = 0;
+		inroom = 10;
+		next_room = 10;
 		name = "Earl the knight";
 		description = "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.";
 		live = 150;

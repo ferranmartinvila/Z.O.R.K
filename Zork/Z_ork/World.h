@@ -11,6 +11,7 @@ public:
 	map*game_map = nullptr;
 	character*me = nullptr;
 	vector<item*>object;
+	
 	vector<entity*>game_data;
 	//world constructor
 	world(){
@@ -29,4 +30,5 @@ public:
 	//read the order that the user enter
 	void get_instruction(vector<string>&);
 };
+extern world*game;
 #endif

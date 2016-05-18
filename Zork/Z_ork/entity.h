@@ -20,6 +20,7 @@ public:
 	string description;
 	list<entity*> data;
 public:
+	//entity(const string& name, const string& description) :name(name), description(description){};
 	//entity destructor
 	~entity(){
 		name.erase();
