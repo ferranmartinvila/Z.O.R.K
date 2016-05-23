@@ -48,33 +48,33 @@ public:
 		bag.clean();*/
 	}
 	//move instruction
-	void apply_go_instruction(const map&, const vector<string>&);
+	void apply_go_instruction(const vector<string>&);
 	
 	//look instruction
-	void apply_look_instruction(vector<item*>&, const map&,vector<string>&);
+	void apply_look_instruction(vector<string>&);
 	
 	//open door instruction
-	bool apply_open_door_instruction(map&, const vector<string>&);
+	bool apply_open_door_instruction(const vector<string>&);
 	
 	//close door instruction
-	bool apply_close_door_instruction(map&, const vector<string>&);
+	bool apply_close_door_instruction(const vector<string>&);
 	
 	//pick instruction
-	bool apply_pick_instruction(vector<item*>&, map&);
+	bool apply_pick_instruction();
 	
 	//drop instruction
-	bool apply_drop_instruction(vector<item*>&, map&);
+	bool apply_drop_instruction();
 	
 	//equip instruction
-	bool apply_equip_instruction(vector<item*>&);
+	bool apply_equip_instruction();
 	
 	//unequip instruction
-	bool apply_unequip_instruction(vector<item*>&);
+	bool apply_unequip_instruction();
 
 	//put instruction
-	bool apply_put_instruction(vector<chest*>&, vector<item*>&);
+	bool apply_put_instruction();
 	
 	//get instruction
-	bool apply_get_instruction(vector<chest*>&, vector<item*>&);
+	bool apply_get_instruction();
 };
 #endif

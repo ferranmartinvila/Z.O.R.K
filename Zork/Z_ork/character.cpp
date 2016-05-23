@@ -1,12 +1,11 @@
 #include "character.h"
-#include "map.h"
 #include "item.h"
 #include "chest.h"
 #include "World.h"
 #include "entity.h"
 #include "vector.h"
 //move instruction
-void character::apply_go_instruction(const map& game_map, const vector<string>& instruction){
+void character::apply_go_instruction(const vector<string>& instruction){
 	if (next_room != -1){
 		if (((exit*)game->game_data.buffer[exit_used])->door_state && inroom != next_room){
 			pos_x = direction[0];
@@ -27,7 +26,7 @@ void character::apply_go_instruction(const map& game_map, const vector<string>& 
 }
 
 //look instruction
-void character::apply_look_instruction(vector<item*>& object, const map& game_map,vector<string>& instruction){
+void character::apply_look_instruction(vector<string>& instruction){
 	
 	//look room operator
 	if (instruction.buffer[1] == "room" && instruction.get_size() == 2)printf("%s\n%s", ((room*)game->game_data.buffer[inroom])->name.get_string(), ((room*)game->game_data.buffer[inroom])->description.get_string());
@@ -72,7 +71,7 @@ void character::apply_look_instruction(vector<item*>& object, const map& game_ma
 	
 	//look object operator
 	else if (object_focused != -1){
-		if ((((item*)game->game_data.buffer[object_focused])->location == inroom || ((item*)game->game_data.buffer[object_focused])->state == UNEQUIPED || EQUIPED) && (object.buffer[object_focused]->state != INCHEST)){
+		if ((((item*)game->game_data.buffer[object_focused])->location == inroom || ((item*)game->game_data.buffer[object_focused])->state == UNEQUIPED || EQUIPED) && (((item*)game->game_data.buffer[object_focused])->state != INCHEST)){
 			((item*)game->game_data.buffer[object_focused])->look_it();
 		}
 		else printf("This object is out of sight");
@@ -96,7 +95,7 @@ void character::apply_look_instruction(vector<item*>& object, const map& game_ma
 }
 
 //open door instruction
-bool character::apply_open_door_instruction(map& game_map,const vector<string>& instruction){
+bool character::apply_open_door_instruction(const vector<string>& instruction){
 	//if there's no door where apply the action
 	if (((exit*)game->game_data.buffer[exit_used])->door == false){
 		printf("There's no door.");
@@ -116,7 +115,7 @@ bool character::apply_open_door_instruction(map& game_map,const vector<string>& 
 }
 
 //close door instruction
-bool character::apply_close_door_instruction(map& game_map, const vector<string>& instruction){
+bool character::apply_close_door_instruction(const vector<string>& instruction){
 	//if there's no door where apply the action
 	if (((exit*)game->game_data.buffer[exit_used])->door == false){
 		printf("There's no door.");
@@ -136,7 +135,7 @@ bool character::apply_close_door_instruction(map& game_map, const vector<string>
 }
 
 //pick instruction
-bool character::apply_pick_instruction(vector<item*>& object, map& game_map){
+bool character::apply_pick_instruction(){
 	if (bag.get_size() == bag.get_capacity()){ printf("Your inventory is full!"); return false; }
 	else if (inroom != ((item*)game->game_data.buffer[object_focused])->location && ((item*)game->game_data.buffer[object_focused])->state == UNKNOWN){ printf("This object is in another room!"); return false; }
 	else if (((item*)game->game_data.buffer[object_focused])->state == EQUIPED || ((item*)game->game_data.buffer[object_focused])->state == UNEQUIPED){ printf("You already have this object!"); return false; }
@@ -153,7 +152,7 @@ bool character::apply_pick_instruction(vector<item*>& object, map& game_map){
 }
 
 //drop instruction
-bool character::apply_drop_instruction(vector<item*>& object, map& game_map){
+bool character::apply_drop_instruction(){
 	if (((item*)game->game_data.buffer[object_focused])->state == EQUIPED){ printf("You have to unequip this object before drop it!"); return false; }
 	else if (((item*)game->game_data.buffer[object_focused])->state == UNKNOWN){ printf("This object is not inside your bag!"); return false; }
 	else{
@@ -182,7 +181,7 @@ bool character::apply_drop_instruction(vector<item*>& object, map& game_map){
 }
 
 //equip instruction
-bool character::apply_equip_instruction(vector<item*>& object){
+bool character::apply_equip_instruction(){
 	if (((item*)game->game_data.buffer[object_focused])->state == UNKNOWN || ((item*)game->game_data.buffer[object_focused])->state == INCHEST){ printf("You don't have this object!"); return false; }
 	if (equipation_state){ printf("You have to unequip the current object before equip other"); return false; };
 	if (((item*)game->game_data.buffer[object_focused])->state == EQUIPED){ printf("This object was equiped before"); return false; }
@@ -219,7 +218,7 @@ bool character::apply_equip_instruction(vector<item*>& object){
 }
 
 //unequip instruction
-bool character::apply_unequip_instruction(vector<item*>& object){
+bool character::apply_unequip_instruction(){
 	if (((item*)game->game_data.buffer[object_focused])->state != EQUIPED){ printf("This object is not equiped."); return false; }
 	if (bag.get_size() == bag.get_capacity()){ printf("You need a free cell to put the unequiped item in the inventory"); return false; }
 	else{
@@ -239,7 +238,7 @@ bool character::apply_unequip_instruction(vector<item*>& object){
 }
 
 //put instruction
-bool character::apply_put_instruction(vector<chest*>&chests, vector<item*>&objects){
+bool character::apply_put_instruction(){
 	if (((item*)game->game_data.buffer[object_focused])->state == EQUIPED){ printf("You have to unequip this object before save it in a chest"); return false; }
 	if (((item*)game->game_data.buffer[object_focused])->state != UNEQUIPED){ printf("You don't have this object."); return false; }
 	if (((chest*)game->game_data.buffer[chest_focused])->storage.get_size() == ((chest*)game->game_data.buffer[chest_focused])->capacity){ printf("This chest is full!"); return false; }
@@ -271,7 +270,7 @@ bool character::apply_put_instruction(vector<chest*>&chests, vector<item*>&objec
 }
 
 //get instruction
-bool character::apply_get_instruction(vector<chest*>&chests, vector<item*>&objects){
+bool character::apply_get_instruction(){
 	if (bag.get_size() == bag.get_capacity()){ printf("Your inventory is full!"); return false; }
 	if (((item*)game->game_data.buffer[object_focused])->state == INCHEST && ((item*)game->game_data.buffer[object_focused])->location != inroom){ printf("This object isn't in this chest"); return false; }
 	else{
