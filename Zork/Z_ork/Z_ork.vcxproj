@@ -73,6 +73,7 @@
   <ItemGroup>
     <ClInclude Include="character.h" />
     <ClInclude Include="chest.h" />
+    <ClInclude Include="creature.h" />
     <ClInclude Include="simple_list.h" />
     <ClInclude Include="vector.h" />
     <ClInclude Include="entity.h" />

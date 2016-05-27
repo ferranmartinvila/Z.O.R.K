@@ -5,7 +5,16 @@
 #include "item.h"
 #include "vector.h"
 #include "character.h"
-#define MAX_ENTITY 29
+#define MAX_ENTITY 38
+
+enum Direction{
+	NORTH,
+	SOUTH,
+	EAST,
+	WEST,
+	NONE
+};
+
 class world{
 public:
 	// me pointer

@@ -8,34 +8,26 @@
 #include "chest.h"
 #include "vector.h"
 #include "string.h"
+#include "creature.h"
+#include "rooms.h"
 #include <stdio.h>
-class character :public entity{
+class character :public creature{
 public:
-	int pos_x, pos_y, inroom;
-	//the next room you focus the action
-	int next_room;
-	//the direction x & y where is the next room
-	int direction[2];
-	//the exit that is between your room and the next room
-	int exit_used;
-	//the object and the chest you focus
-	int object_focused, chest_focused;
 
-	//is true if your equipation cell is free
-	bool equipation_state;
-	vector<item*> bag;
+	//Bad data
 	item* equipation;
-	//stats
-	unsigned int live;
-	unsigned int attack;
-	character(){
-		pos_x = pos_y = exit_used = direction[0] = direction[1] = 0;
-		inroom = 10;
-		next_room = 10;
-		name = "Earl the knight";
-		description = "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.";
-		live = 150;
-		attack = 5;
+	unsigned int in_bag = 0;
+
+	//Functional pointers
+	room* next_room_ad = nullptr;
+	exit* exit_focused = nullptr;
+	item* object_focused_ad = nullptr;
+	chest* chest_focused_ad = nullptr;
+
+
+public:
+
+	character() :creature("Earl the knight", "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.", 150, 5){
 		type = CHARACTER;
 	}
 	~character(){
@@ -47,6 +39,8 @@ public:
 		equipation = nullptr;
 		bag.clean();*/
 	}
+
+	//Functions
 	//move instruction
 	void apply_go_instruction(const vector<string>&);
 	
@@ -54,10 +48,10 @@ public:
 	void apply_look_instruction(vector<string>&);
 	
 	//open door instruction
-	bool apply_open_door_instruction(const vector<string>&);
+	bool apply_open_door_instruction();
 	
 	//close door instruction
-	bool apply_close_door_instruction(const vector<string>&);
+	bool apply_close_door_instruction();
 	
 	//pick instruction
 	bool apply_pick_instruction();

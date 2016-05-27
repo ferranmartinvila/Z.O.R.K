@@ -19,18 +19,24 @@ public:
 	string name;
 	string description;
 	list<entity*> data;
+
 public:
-	//entity(const string& name, const string& description) :name(name), description(description){};
+
+	//entity constructor
+	entity(const string& name, const string& description) :name(name), description(description){}
 	//entity destructor
 	~entity(){
 		name.erase();
 		description.erase();
 		data.clean();
 	}
-	//entity virtual look it function
+
+
+	//Functions
 	virtual void look_it(){
 		printf("%s\n\n%s", name.get_string(), description.get_string());
 	}
-	//virtual bool update();
+	virtual void Update(){}
+
 };
 #endif

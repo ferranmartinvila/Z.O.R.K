@@ -87,14 +87,14 @@ void string::operator +=(const char* string){
 }
 void string::operator+=(const string& string){
 	if (strlen(string.STR) + strlen(STR) <= max_capacity){
-		strcat(STR, string.STR);
+		strcat(strcat(STR," "), string.STR);
 	}
 	else{
 		char* str_cpy = STR;
 		memory_size(strlen(string.STR) + strlen(STR) + 1);
 		delete STR;
 		STR = new char[max_capacity];
-		strcat(str_cpy, string.STR);
+		strcat(strcat(str_cpy," "), string.STR);
 	}
 }
 
@@ -131,13 +131,14 @@ void string::operator =(const string& string){
 }
 
 //operator +
-char* string::operator +(const char* string)const{
-	strcat(STR, string);
-	return STR;
+string* string::operator +(const char* string_entered)const{
+	string* result = new string (strcat(STR, string_entered));
+	return result;
 }
-char* string::operator +(const string& string)const{
-	strcat(strcat({ STR }," "), { string.STR });
-	return STR;
+string* string::operator +(const string& string_entered)const{
+	
+	string* result = new string(strcat(strcat({ STR }, " "), { string_entered.STR }));
+	return result;
 }
 
 void string::memory_size(unsigned int size){

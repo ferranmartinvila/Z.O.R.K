@@ -1,6 +1,7 @@
 #ifndef _item_
 #define _item_
 #include "entity.h"
+struct room;
 //possible item states
 enum state{
 	EQUIPED,
@@ -10,15 +11,15 @@ enum state{
 };
 class item :public entity{
 public:
+	room*place;
 	int location;
 	int state;
 	int live_buff;
 	int attack_buff;
 	//copy item constructor
-	item(const string& cpy_name, const string& cpy_description, int location, int state, int live_buff, int attack_buff):location(location), state(state), live_buff(live_buff), attack_buff(attack_buff){
-		name = cpy_name;
-		description = cpy_description;
+	item(const string& name, const string& description, int location, int state, int live_buff, int attack_buff,room* room_added = nullptr):entity(name,description),location(location), state(state), live_buff(live_buff), attack_buff(attack_buff){
 		type = ITEM;
+		place = room_added;
 	}
 	//default item constructor
 	/*~item(){

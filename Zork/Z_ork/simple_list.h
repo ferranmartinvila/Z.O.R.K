@@ -186,25 +186,43 @@ public:
 
 	//erase node
 	node* erase_node(node* to_delete){
-		node*pre_temp = first_element;
-		node*deleted = new node(to_delete->data);
-		if (to_delete == last_element()){
-			pop_back();
-		}
-		else if (to_delete == first_element){
-			pop_front();
-		}
-		else{
-
-
-			while (pre_temp->next != to_delete){
-				pre_temp = pre_temp->next;
+		if (get_size()){
+			node*pre_temp = first_element;
+			//node*deleted = new node(to_delete->data);
+			if (to_delete == first_element){
+				first_element = first_element->next;
 			}
-			pre_temp->next = to_delete->next;
-			delete to_delete;
+
+			if (to_delete == last_element()){
+				pop_back();
+			}
+			else{
+
+
+				while (pre_temp->next != to_delete){
+					pre_temp = pre_temp->next;
+				}
+				pre_temp->next = to_delete->next;
+				delete to_delete;
+			}
+			to_delete = nullptr;
+			return to_delete;
 		}
-		to_delete = nullptr;
-		return deleted;
+	}
+
+	//find position
+	unsigned int find_position(const type& to_find){
+		node* temp = first_element;
+		int position = 0;
+		while (temp){
+			if (temp->data == to_find){
+				return position;
+			}
+			else{
+				temp = temp->next;
+				position++;
+			}
+		}
 	}
 
 };

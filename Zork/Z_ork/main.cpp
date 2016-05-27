@@ -18,7 +18,7 @@ int main(){
 	//kbhit test
 	//Time data
 	unsigned int last_time = 0;
-	unsigned int update_rate = 1000;
+	unsigned int update_rate = 2500;
 	unsigned int current_time;
 	//Instruction data
 	char instruction[SIZE];
@@ -31,7 +31,11 @@ int main(){
 		current_time = GetTickCount();
 		//Program waiting
 		if (current_time > last_time + update_rate){
-			printf("Waiting...\n");
+			//Udates the game entities
+			printf("\n game updated...");
+			for (int k = 0; k < MAX_ENTITY; k++){
+				game->game_data.buffer[k]->Update();
+			}
 			last_time = current_time;
 		}
 		//Reading input

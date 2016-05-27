@@ -1,23 +1,20 @@
 #ifndef _chest_
 #define _chest_
 #include "entity.h"
-#include "vector.h"
 #include "item.h"
+struct room;
 class chest :public entity{
 public:
-	//chest storage
-	vector<item*>storage;
-	//chest capacity limitation
-	unsigned int capacity;
-	int location;
 
-	//chest copy consttructor
-	chest(item* object, int cpy_location){
-		storage.push_back(object);
+	//Storage capactity
+	unsigned int capacity;
+
+	room*place;
+public:
+
+	//Constructor
+	chest(room*place, const string& name, const string& description) :entity(name, description), place(place){
 		capacity = 2;
-		location = cpy_location;
-		name = "chest";
-		description = "A blue metallic box with a limited storage of two";
 		type = CHEST;
 	}
 	~chest(){
@@ -25,12 +22,16 @@ public:
 		name.erase();
 		description.erase();*/
 	}
-	//look it virtual function
+	
+	
+	//Functions
 	void look_it(){
-		if (storage.get_size() > 0){
-			printf("Chest Storage:\n");
-			for (int k = storage.get_size()-1; k >= 0;k--){
-				printf("  -%s", storage.buffer[k]->name);
+		list<entity*>::node* temp = data.first_element;
+		printf("%s:\n%s\n\nStorage:\n", name.get_string(),description.get_string());
+		if (temp != nullptr){
+			while (temp){
+				printf("- %s\n", ((entity*)temp->data)->name.get_string());
+				temp = temp->next;
 			}
 		}
 		else printf("There's nothing in the chest!");
