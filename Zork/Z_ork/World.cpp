@@ -1,10 +1,5 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "World.h"
-#include "string.h"
-#include <string.h>
-#include <stdio.h>
-#include "vector.h"
-#include "character.h"
 
 void world::Initialize(){
 	
@@ -124,7 +119,7 @@ void world::Initialize(){
 	game_data.push_back(Furnace_Key);
 
 	//Marcus Notes
-	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.", 12,UNKNOWN,0,0,Ruined_House);
+	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.\n\nText: If you have lose something Carl have it, he is the best thieve.", 12,UNKNOWN,0,0,Dead_end_Street);
 	game_data.push_back(Marcus_Notes);
 
 	//Raw food
@@ -132,11 +127,11 @@ void world::Initialize(){
 	game_data.push_back(Raw_food);
 
 	//Wine
-	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.", 15,UNKNOWN,0,2,Principal_Square);
+	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.", 15,UNKNOWN,0,2,Ruined_House);
 	game_data.push_back(Wine);
 
 	//Knight's Sword
-	item*Knight_Sword = new item("Knight Sword", "A huge iron sword full of drawings and with a dragon on the handle.", 10,INCHEST,0,8,Jack_House_MainRoom);
+	item*Knight_Sword = new item("Knight sword", "A huge iron sword full of drawings and with a dragon on the handle.", 10,INCHEST,0,8,Jack_House_MainRoom);
 	game_data.push_back(Knight_Sword);
 
 	//Bloody Sword
@@ -155,22 +150,28 @@ void world::Initialize(){
 	Furnace_Chest->data.push_back(Bloody_Sword);
 	game_data.push_back(Furnace_Chest);
 	
-
+	//NPCs
+	trader* Marcus = new trader("Marcus", "Old man that lives in the street trying to survive with the rubbish of the people. He knows everthing about Bloody Sword.", 50, 0, Dead_end_Street, Marcus_Notes);
+	game_data.push_back(Marcus);
+	//NPCs
+	soldier* John = new soldier("John", "A soldier of Bloody Sword. He works for the King.", 200, 20, Principal_Square);
+	game_data.push_back(John);
 	//Map Build
 	//Principal Square
-	Principal_Square->data.push_back(Wine);
 	Principal_Square->data.push_back(PrincipalSquare_Chest);
 	Principal_Square->data.push_back(PrincipalSquare_Shop);
 	Principal_Square->data.push_back(PrincipalSquare_Lobby);
 	Principal_Square->data.push_back(PrincipalSquare_RuinedHouse);
 	Principal_Square->data.push_back(PrincipalSquare_DeadendStreet);
+	Principal_Square->data.push_back(John);
 	//Dead end street
 	Dead_end_Street->data.push_back(Raw_food);
 	Dead_end_Street->data.push_back(Oil_Light);
 	Dead_end_Street->data.push_back(DeadendStreet_PrincipalSquare);
+	Dead_end_Street->data.push_back(Marcus);
 	//Ruined House
-	Ruined_House->data.push_back(Marcus_Notes);
 	Ruined_House->data.push_back(RuinedHouse_PrincipalSquare);
+	Ruined_House->data.push_back(Wine);
 	//Jack Lobby
 	Jack_House_Lobby->data.push_back(Lobby_PrincipalSquare);
 	Jack_House_Lobby->data.push_back(Lobby_MainRoom);
@@ -197,7 +198,7 @@ void world::Initialize(){
 	//Character	
 	me->location = Principal_Square;
 	me->next_room_ad = Principal_Square;
-	
+	game_data.push_back(me);
 }
 
 void world::get_instruction(vector<string>& instruction){
@@ -207,7 +208,6 @@ void world::get_instruction(vector<string>& instruction){
 	me->next_room_ad = me->location;
 	me->object_focused_ad = nullptr;
 	me->chest_focused_ad = nullptr;
-	
 	//Get exit & room focused
 	if (instruction.buffer[0] == "go" || instruction.buffer[0] == "close" || instruction.buffer[0] == "open" || instruction.buffer[0] == "look"){
 		unsigned int temp_direction = NONE;
@@ -236,7 +236,7 @@ void world::get_instruction(vector<string>& instruction){
 	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look")){
 		//If item is a composed name the two strings that compose it are fusioned 
 		if ((instruction.get_size() == 3 && instruction.buffer[1] != "room") || (instruction.get_size() == 5 && instruction.buffer[4] == "chest")){
-			instruction.buffer[1]+= instruction.buffer[2];
+			instruction.buffer[1]+=instruction.buffer[2];
 		}
 		//Object focused
 		for (int k = 0; k < MAX_ENTITY; k++){
@@ -260,6 +260,15 @@ void world::get_instruction(vector<string>& instruction){
 			}
 		}
 	}
+	//NPC focused
+	if (instruction.buffer[0] == "talk" || instruction.buffer[0] == "look" || instruction.buffer[0] == "attack"){
+		for (int k = 0; k < MAX_ENTITY; k++){
+			if ((instruction.get_size() == 3 && ((npc*)game_data.buffer[k])->name == instruction.buffer[2]) || (instruction.get_size() == 2 && ((npc*)game_data.buffer[k])->name == instruction.buffer[1])){
+				me->npc_focused = (npc*)game_data.buffer[k];
+				break;
+			}
+		}
+	}
 }
 
 bool world::apply_order(vector<string>& instruction){
@@ -275,9 +284,10 @@ bool world::apply_order(vector<string>& instruction){
 	"\nlook + direction -> Show exit focused content"
 	"\nlook + inventory -> Show all inventory objects"
 	"\nlook + room + objects -> Show all the objects in this room"
-	"\n\look + equipation -> Show your equiped object stats"
+	"\nlook + equipation -> Show your equiped object stats"
 	"\nlook + chest -> Show all the items in the selected chest"
 	"\nlook + item -> Show all the selected item data"
+	"\nlook + npc_name -> Show the selected npc current data"
 	//Movement
 	"\ngo + direction ->Move in the direction"
 	//Door actions
@@ -291,34 +301,49 @@ bool world::apply_order(vector<string>& instruction){
 	"\nunequip + object -> Unequip equiped object and put it in the inventory"
 	//Chest actions
 	"\nget + object + from + chest ->Gets the object from the selected chest"
-	"\nput + object + into + chest -> Put the selected item into the chest"); 
+	"\nput + object + into + chest -> Put the selected item into the chest"
+	//NPC actions
+	"\ntalk to + npc_name -> Talk to the selected npc"
+	); 
 	reader++; }
-	//go instruction
-	if (instruction.buffer[0] == "go")me->apply_go_instruction(instruction),reader++;
-	//look instruction
-	else if (instruction.buffer[0] == "look")me->apply_look_instruction(instruction), reader++;
-	
-	if (me->object_focused_ad != nullptr){
-		//pick instruction
-		if ((instruction.buffer[0] == "pick" && instruction.get_size() <= 4))me->apply_pick_instruction(), reader++;
-		//drop instruction
-		else if ((instruction.buffer[0] == "drop" && instruction.get_size() <= 4))me->apply_drop_instruction(), reader++;
-		//equip instruction
-		else if (instruction.buffer[0] == "equip"){ me->apply_equip_instruction(); reader++; }
-		//unequip instruction
-		else if (instruction.buffer[0] == "unequip"){ me->apply_unequip_instruction(); reader++; }
-		//put instruction
-		else if (instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
-		//get instruction
-		else if (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
+
+	if (me->action == NOTHING){
+		//go instruction
+		if (instruction.buffer[0] == "go")me->apply_go_instruction(instruction), reader++;
+		//look instruction
+		else if (instruction.buffer[0] == "look")me->apply_look_instruction(instruction), reader++;
+
+		if (me->object_focused_ad != nullptr){
+			//pick instruction
+			if ((instruction.buffer[0] == "pick" && instruction.get_size() <= 4))me->apply_pick_instruction(), reader++;
+			//drop instruction
+			else if ((instruction.buffer[0] == "drop" && instruction.get_size() <= 4))me->apply_drop_instruction(), reader++;
+			//equip instruction
+			else if (instruction.buffer[0] == "equip"){ me->apply_equip_instruction(); reader++; }
+			//unequip instruction
+			else if (instruction.buffer[0] == "unequip"){ me->apply_unequip_instruction(); reader++; }
+			//put instruction
+			else if (instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
+			//get instruction
+			else if (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
+		}
+		else if (me->next_room_ad != nullptr && me->exit_focused != nullptr){
+			//open instruction
+			if ((instruction.buffer[0] == "open" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_open_door_instruction(); reader++; }
+			//close instruction
+			else if ((instruction.buffer[0] == "close" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_close_door_instruction(); reader++; }
+		}
 	}
-	else if (me->next_room_ad != nullptr && me->exit_focused != nullptr){
-		//open instruction
-		if ((instruction.buffer[0] == "open" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_open_door_instruction(); reader++; }
-		//close instruction
-		else if ((instruction.buffer[0] == "close" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_close_door_instruction(); reader++; }
+	if (me->npc_focused != nullptr){
+		if (me->npc_focused->alive == true){
+			//talk instruction
+			if (instruction.buffer[0] == "talk" && instruction.buffer[1] == "to" || me->action == TALK){ me->apply_talk_instruction(instruction); reader++; }
+			//attack instruction
+			if (instruction.buffer[0] == "attack" || (instruction.buffer[0] == "special" && instruction.buffer[1] == "attack")){ me->apply_attack_instruction(instruction); reader++; }
+		}
+		else printf("%s is dead.", me->npc_focused->name.get_string());
 	}
-	//if the size of the instruction is not the respective for the action Invalid Comand alert is printed
+	//if the instruction is not the correct for the action Invalid Comand alert is printed
 	if (reader == false)printf("Invalid Comand");
 	else return true;
 }

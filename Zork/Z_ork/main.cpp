@@ -32,7 +32,7 @@ int main(){
 		//Program waiting
 		if (current_time > last_time + update_rate){
 			//Udates the game entities
-			printf("\n game updated...");
+			printf("\n game updated...\n");
 			for (int k = 0; k < MAX_ENTITY; k++){
 				game->game_data.buffer[k]->Update();
 			}

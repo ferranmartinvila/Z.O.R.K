@@ -74,12 +74,6 @@ void character::apply_look_instruction(vector<string>& instruction){
 		else printf("This object is out of sight");
 	}
 	
-	//look chest
-	else if (chest_focused_ad != nullptr && instruction.buffer[1] == "chest"){
-		chest_focused_ad->look_it();
-	}
-	else if (chest_focused_ad == nullptr)printf("There's no chest here");
-	
 	//look equipation operator(when equiped)
 	else if (instruction.buffer[1] == "equipation"){
 		if (equipation == nullptr){
@@ -91,6 +85,23 @@ void character::apply_look_instruction(vector<string>& instruction){
 			if (equipation->live_buff > 0)printf("+%i live!\n", equipation->live_buff);
 		}
 	}
+
+	//look npc
+	else if (npc_focused != nullptr && instruction.buffer[1] == npc_focused->name.get_string()){
+		if (npc_focused->location != location)printf("%s is not here", npc_focused->name.get_string());
+		else if (npc_focused->alive == false)printf("%s is simply dead. There's anything interesting to know about him now.",npc_focused->name.get_string());
+		else{
+			printf("%s:\n%s", npc_focused->name.get_string(), npc_focused->description.get_string());
+			//Add storage show
+		}
+	}
+
+	//look chest
+	else if (chest_focused_ad != nullptr && instruction.buffer[1] == "chest"){
+		chest_focused_ad->look_it();
+	}
+	else if (chest_focused_ad == nullptr)printf("There's no chest here");
+
 	else printf("Invalid Comand");
 }
 
@@ -252,4 +263,29 @@ bool character::apply_get_instruction(){
 		chest_focused_ad->data.erase(chest_focused_ad->data.find_position((object_focused_ad)));
 		printf("You get the %s from %s", object_focused_ad->name.get_string(), chest_focused_ad->name.get_string());
 	}
+}
+
+//talk instruction
+bool character::apply_talk_instruction(const vector<string>& instruction){
+	if (npc_focused->location == location){
+		if (npc_focused->type == TRADER){
+			((trader*)npc_focused)->Talk(instruction);
+		}
+		else npc_focused->Talk(instruction);
+	}
+	else{ printf("This npc now is not inside this room."); }
+	return true;
+}
+
+//attack instruction
+bool character::apply_attack_instruction(const vector<string>& instruction){
+	if (npc_focused->location == location){
+		game->me->action = ATTACK;
+		if (npc_focused->type == SOILDER){
+			((soldier*)npc_focused)->Attack();
+		}
+		else npc_focused->Attack();
+	}
+	else{ printf("This npc now is not inside this room."); }
+	return true;
 }

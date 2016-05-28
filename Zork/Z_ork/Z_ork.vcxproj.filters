@@ -1,72 +1,96 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Archivos de código fuente">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Source">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Archivos de encabezado">
+    <Filter Include="Entities">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
     </Filter>
-    <Filter Include="Archivos de recursos">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Code files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="NPCs">
+      <UniqueIdentifier>{affc33b5-8e64-4986-a7e4-b14b7bbb4782}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Code files</Filter>
     </ClCompile>
     <ClCompile Include="World.cpp">
-      <Filter>Archivos de código fuente</Filter>
-    </ClCompile>
-    <ClCompile Include="string.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Code files</Filter>
     </ClCompile>
     <ClCompile Include="character.cpp">
-      <Filter>Archivos de código fuente</Filter>
+      <Filter>Code files</Filter>
+    </ClCompile>
+    <ClCompile Include="string.cpp">
+      <Filter>Source</Filter>
+    </ClCompile>
+    <ClCompile Include="trader.cpp">
+      <Filter>NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="NPC.cpp">
+      <Filter>NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="soldier.cpp">
+      <Filter>NPCs</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="character.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="exits.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="entity.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="item.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="rooms.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="string.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="chest.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="leaks.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="vector.h">
-      <Filter>Archivos de encabezado</Filter>
-    </ClInclude>
-    <ClInclude Include="simple_list.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
     </ClInclude>
     <ClInclude Include="creature.h">
-      <Filter>Archivos de encabezado</Filter>
+      <Filter>Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="string.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="simple_list.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="leaks.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="vector.h">
+      <Filter>Source</Filter>
+    </ClInclude>
+    <ClInclude Include="trader.h">
+      <Filter>NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="merchant.h">
+      <Filter>NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="thief.h">
+      <Filter>NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="NPC.h">
+      <Filter>NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="soldier.h">
+      <Filter>NPCs</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

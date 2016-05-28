@@ -2,13 +2,14 @@
 #ifndef _character_
 #define _character_
 #include "entity.h"
-#include "map.h"
 #include "string.h"
 #include "item.h"
 #include "chest.h"
+#include "exits.h"
 #include "vector.h"
 #include "string.h"
-#include "creature.h"
+#include"creature.h"
+#include "NPC.h"
 #include "rooms.h"
 #include <stdio.h>
 class character :public creature{
@@ -23,7 +24,7 @@ public:
 	exit* exit_focused = nullptr;
 	item* object_focused_ad = nullptr;
 	chest* chest_focused_ad = nullptr;
-
+	npc*npc_focused = nullptr;
 
 public:
 
@@ -70,5 +71,11 @@ public:
 	
 	//get instruction
 	bool apply_get_instruction();
+
+	//talk instruction
+	bool apply_talk_instruction(const vector<string>&);
+
+	//attack instruction
+	bool apply_attack_instruction(const vector<string>&);
 };
 #endif

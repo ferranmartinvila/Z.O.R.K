@@ -1,11 +1,19 @@
 #ifndef _world_
 #define _world_
-#include"string.h"
-#include "map.h"
+#include "string.h"
+#include "string.h"
+#include <string.h>
+#include <stdio.h>
+#include "rooms.h"
+#include "chest.h"
+#include "exits.h"
 #include "item.h"
 #include "vector.h"
 #include "character.h"
-#define MAX_ENTITY 38
+#include "trader.h"
+#include "soldier.h"
+
+#define MAX_ENTITY 40
 
 enum Direction{
 	NORTH,

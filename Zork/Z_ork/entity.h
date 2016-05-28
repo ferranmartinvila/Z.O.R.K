@@ -9,6 +9,10 @@ enum type{
 	EXIT,
 	CHEST,
 	ITEM,
+	TRADER,
+	SOILDER,
+	MERCHANT,
+	THIEF,
 	UNDEFINED
 };
 

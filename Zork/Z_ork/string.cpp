@@ -3,8 +3,8 @@
 #include<string.h>
 #include<stdlib.h>
 string::string(){
-	STR = new char[10];
-	memory_size(10);
+	STR = new char[20];
+	memory_size(20);
 }
 
 string::string(const char*cadena){
@@ -81,7 +81,7 @@ void string::operator +=(const char* string){
 	else{
 		memory_size(strlen(string) + strlen(STR) + 1);
 		delete STR;
-		STR = new char[max_capacity];
+		STR = new char[strlen(STR) + strlen(STR) + 1];
 		strcat(STR, string);
 	}
 }
@@ -93,8 +93,8 @@ void string::operator+=(const string& string){
 		char* str_cpy = STR;
 		memory_size(strlen(string.STR) + strlen(STR) + 1);
 		delete STR;
-		STR = new char[max_capacity];
-		strcat(strcat(str_cpy," "), string.STR);
+		STR = new char[strlen(string.STR) + strlen(STR) + 1];
+		strcat(strcat(STR," "), string.STR);
 	}
 }
 
