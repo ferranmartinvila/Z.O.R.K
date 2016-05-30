@@ -6,6 +6,16 @@ void character::apply_go_instruction(const vector<string>& instruction){
 		if ((exit_focused->door_state == true || exit_focused->door == false)){
 			location = next_room_ad;
 			printf("%s\n%s", location->name.get_string(), location->description.get_string());
+			printf("\nContaints:");
+			list<entity*>::node*temp = location->data.first_element;
+			int k = 0;
+			while (temp){
+				if (temp->data->type!=EXIT)
+				printf("\n%s", temp->data->name.get_string());
+				temp = temp->next;
+				k++;
+			}
+			if (k == 0)printf("This room is empty.");
 
 		}
 		else if (exit_focused->door_state == false && exit_focused->door == true){
@@ -23,7 +33,7 @@ void character::apply_look_instruction(vector<string>& instruction){
 	if (instruction.buffer[1] == "room" && instruction.get_size() == 2)printf("%s\n%s", location->name.get_string(), location->description.get_string());
 	
 	//look me operator
-	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]", name.get_string(), description.get_string(), live_points, attack);
+	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]\nmoney = %i", name.get_string(), description.get_string(), live_points, attack,money);
 	
 	//look inventory operator
 	else if (instruction.buffer[1] == "inventory"){
@@ -119,19 +129,35 @@ bool character::apply_open_door_instruction(){
 	}
 	//open door
 	else{
-		list<entity*>::node* next_exit = exit_focused->connected_room->data.first_element;
-		while (next_exit){
-			if (((exit*)next_exit->data)->connected_room == location){
-				break;
-			}
-			else{
-				next_exit = next_exit->next;
+		bool light = true;
+		bool key = true;
+		if (exit_focused->connected_room->name == "Jack's Forge Warehouse"){
+			//CHECK CONDITIONS
+			light = false;
+			key = false;
+			list<entity*>::node* temp = data.first_element;
+			while (temp){
+				if (((item*)temp->data)->name == "Oil Light")light = true;
+				if (((item*)temp->data)->name == "Furnace Key")light = true;
+				temp = temp->next;
 			}
 		}
-		((exit*)next_exit->data)->door_state = true;
-		exit_focused->door_state = true;
-		printf("Now the %s door is open!", exit_focused->name.get_string());
-		return true;
+		if(light & key){
+			list<entity*>::node* next_exit = exit_focused->connected_room->data.first_element;
+			while (next_exit){
+				if (((exit*)next_exit->data)->connected_room == location){
+					break;
+				}
+				else{
+					next_exit = next_exit->next;
+				}
+			}
+			((exit*)next_exit->data)->door_state = true;
+			exit_focused->door_state = true;
+			printf("Now the %s door is open!", exit_focused->name.get_string());
+			return true;
+		}
+		else{ printf("You need the Furnace Key and the Oil Light to enter here."); }
 	}
 }
 
@@ -214,6 +240,7 @@ bool character::apply_equip_instruction(){
 		printf("Now %s is equiped!", equipation->name.get_string());
 		if (equipation->attack_buff > 0)printf("+%i attack!", equipation->attack_buff);
 		if (equipation->live_buff > 0)printf("+%i live!", equipation->live_buff);
+		return true;
 	}
 }
 //unequip instruction
@@ -262,6 +289,7 @@ bool character::apply_get_instruction(){
 		data.push_back(object_focused_ad);
 		chest_focused_ad->data.erase(chest_focused_ad->data.find_position((object_focused_ad)));
 		printf("You get the %s from %s", object_focused_ad->name.get_string(), chest_focused_ad->name.get_string());
+		return true;
 	}
 }
 
@@ -271,6 +299,12 @@ bool character::apply_talk_instruction(const vector<string>& instruction){
 		if (npc_focused->type == TRADER){
 			((trader*)npc_focused)->Talk(instruction);
 		}
+		else if (npc_focused->type == MERCHANT){
+			((merchant*)npc_focused)->Talk(instruction);
+		}
+		else if (npc_focused->type == TALKER){
+			((talker*)npc_focused)->Talk(instruction);
+		}
 		else npc_focused->Talk(instruction);
 	}
 	else{ printf("This npc now is not inside this room."); }
@@ -278,14 +312,25 @@ bool character::apply_talk_instruction(const vector<string>& instruction){
 }
 
 //attack instruction
-bool character::apply_attack_instruction(const vector<string>& instruction){
-	if (npc_focused->location == location){
-		game->me->action = ATTACK;
-		if (npc_focused->type == SOILDER){
-			((soldier*)npc_focused)->Attack();
+bool character::apply_attack_instruction(){
+	if (npc_focused->location == location ){
+		if (npc_focused->live_points >= 1){
+			game->me->action = ATTACK;
+			npc_focused->action = ATTACK;
+			npc_focused->live_points -= attack;
+			printf("\nYou do %i damage to %s!", attack, npc_focused->name.get_string());
+			if (npc_focused->live_points <= 0){
+				printf("\nYou defeat %s!\n", npc_focused->name.get_string());
+				game->me->action = NOTHING;
+			}
 		}
-		else npc_focused->Attack();
+		else printf("%s is dead.",npc_focused->name.get_string());
+		
 	}
-	else{ printf("This npc now is not inside this room."); }
+	else{ printf("\nThis npc now is not inside this room."); }
 	return true;
+}
+
+void character::Update(){
+	if (action == ATTACK)apply_attack_instruction();
 }

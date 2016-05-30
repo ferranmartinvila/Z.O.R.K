@@ -39,6 +39,15 @@
     <ClCompile Include="soldier.cpp">
       <Filter>NPCs</Filter>
     </ClCompile>
+    <ClCompile Include="thief.cpp">
+      <Filter>NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="merchant.cpp">
+      <Filter>NPCs</Filter>
+    </ClCompile>
+    <ClCompile Include="talker.cpp">
+      <Filter>NPCs</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="World.h">
@@ -90,6 +99,9 @@
       <Filter>NPCs</Filter>
     </ClInclude>
     <ClInclude Include="soldier.h">
+      <Filter>NPCs</Filter>
+    </ClInclude>
+    <ClInclude Include="talker.h">
       <Filter>NPCs</Filter>
     </ClInclude>
   </ItemGroup>

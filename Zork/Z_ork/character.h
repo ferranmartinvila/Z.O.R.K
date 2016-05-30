@@ -26,9 +26,12 @@ public:
 	chest* chest_focused_ad = nullptr;
 	npc*npc_focused = nullptr;
 
+	//Money
+	unsigned int money = 0;
+
 public:
 
-	character() :creature("Earl the knight", "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.", 150, 5){
+	character() :creature("Earl the knight", "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.",50, 10){
 		type = CHARACTER;
 	}
 	~character(){
@@ -40,7 +43,7 @@ public:
 		equipation = nullptr;
 		bag.clean();*/
 	}
-
+	void Update();
 	//Functions
 	//move instruction
 	void apply_go_instruction(const vector<string>&);
@@ -76,6 +79,6 @@ public:
 	bool apply_talk_instruction(const vector<string>&);
 
 	//attack instruction
-	bool apply_attack_instruction(const vector<string>&);
+	bool apply_attack_instruction();
 };
 #endif

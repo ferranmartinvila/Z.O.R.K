@@ -12,8 +12,11 @@
 #include "character.h"
 #include "trader.h"
 #include "soldier.h"
+#include "thief.h"
+#include "merchant.h"
+#include "talker.h"
 
-#define MAX_ENTITY 40
+#define MAX_ENTITY 47
 
 enum Direction{
 	NORTH,

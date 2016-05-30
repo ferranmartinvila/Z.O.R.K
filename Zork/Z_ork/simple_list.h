@@ -86,6 +86,7 @@ public:
 			delete first_element;
 			return true;
 		}
+		return true;
 	}
 
 	//pop.front function
@@ -223,6 +224,7 @@ public:
 				position++;
 			}
 		}
+		return position;
 	}
 
 };

@@ -67,9 +67,12 @@
   <ItemGroup>
     <ClCompile Include="character.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="merchant.cpp" />
     <ClCompile Include="NPC.cpp" />
     <ClCompile Include="soldier.cpp" />
     <ClCompile Include="string.cpp" />
+    <ClCompile Include="talker.cpp" />
+    <ClCompile Include="thief.cpp" />
     <ClCompile Include="trader.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
@@ -81,6 +84,7 @@
     <ClInclude Include="NPC.h" />
     <ClInclude Include="simple_list.h" />
     <ClInclude Include="soldier.h" />
+    <ClInclude Include="talker.h" />
     <ClInclude Include="thief.h" />
     <ClInclude Include="trader.h" />
     <ClInclude Include="vector.h" />

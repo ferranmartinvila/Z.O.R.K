@@ -91,7 +91,7 @@ void world::Initialize(){
 	//Shop
 	exit*Shop_PrincipalSquare = new exit("Jack Shop east exit", "There's the door to go outside at the Principal Square.", EAST, Principal_Square, true);
 	game_data.push_back(Shop_PrincipalSquare);
-	exit*Shop_Warehouse = new exit("Jack shop west exit", "Between the tools there's a small door that probalby takes you to the warehouse.", WEST, Jack_Forge_Warehouse, true, true);
+	exit*Shop_Warehouse = new exit("Jack shop west exit", "Between the tools there's a small door that probalby takes you to the warehouse.", WEST, Jack_Forge_Warehouse, true);
 	game_data.push_back(Shop_Warehouse);
 
 	//Warehouse
@@ -107,42 +107,42 @@ void world::Initialize(){
 
 	//OBJECTS
 	//Oil Light
-	item*Oil_Light = new item("Oil Light", "An old but usefull oil light.", 11,UNKNOWN,0,1,Dead_end_Street);
+	item*Oil_Light = new item("Oil Light", "An old but usefull oil light.",INCHEST,0,5,Principal_Square,50);
 	game_data.push_back(Oil_Light);
 
 	//Golden Dagger
-	item*Golden_Dagger = new item("Golden Dagger", "A little gold Dagger that get the attention of any person that knows about metals.", 14,UNKNOWN,0,6,Jack_House_MainRoom);
+	item*Golden_Dagger = new item("Golden Dagger", "A little gold Dagger that get the attention of any person that knows about metals.", IN_NPC, 0, 8, Jack_Forge_Shop, 100);
 	game_data.push_back(Golden_Dagger);
 
 	//Furnace Key
-	item*Furnace_Key = new item("Furnace Key", "A big and strange key which seems to have been used.", 19,INCHEST,0,3,Jack_Forge_Shop);
+	item*Furnace_Key = new item("Furnace Key", "A big and strange key which seems to have been used.",IN_NPC,0,5,Jack_Forge_Shop,60);
 	game_data.push_back(Furnace_Key);
 
 	//Marcus Notes
-	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.\n\nText: If you have lose something Carl have it, he is the best thieve.", 12,UNKNOWN,0,0,Dead_end_Street);
+	item*Marcus_Notes = new item("Marcus Notes", "Old and poorly maintained notes. Stained by humidity and illegible in certain parts.\n\nText: If you have lose something Carl have it, he is the best thieve.", IN_NPC, 0, 0, Dead_end_Street, 30);
 	game_data.push_back(Marcus_Notes);
 
 	//Raw food
-	item*Raw_food = new item("Raw food", "Food with a quite advanced state of rot. You will be healthier if you don't eat it.", 11,UNKNOWN,0,0,Dead_end_Street);
+	item*Raw_food = new item("Raw food", "Food with a quite advanced state of rot. You will be healthier if you don't eat it.", IN_NPC, -10, +2, Jack_Forge_Shop, 15);
 	game_data.push_back(Raw_food);
 
 	//Wine
-	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.", 15,UNKNOWN,0,2,Ruined_House);
+	item*Wine = new item("Wine", "An alcoholic drink made from fermented grape juice. This drink is able to persuade anyone.",UNKNOWN,+5,2,Ruined_House,35);
 	game_data.push_back(Wine);
 
 	//Knight's Sword
-	item*Knight_Sword = new item("Knight sword", "A huge iron sword full of drawings and with a dragon on the handle.", 10,INCHEST,0,8,Jack_House_MainRoom);
+	item*Knight_Sword = new item("Knight sword", "A huge iron sword full of drawings and with a dragon on the handle.",INCHEST,0,15,Jack_House_MainRoom,170);
 	game_data.push_back(Knight_Sword);
 
 	//Bloody Sword
-	item*Bloody_Sword = new item("Bloody Sword", "A magic red sword. It emits a strange energy that provides a supernatural force at the knight that uses it.", 19, INCHEST, 100, 12, Jack_Forge_Furnace);
+	item*Bloody_Sword = new item("Bloody Sword", "A magic red sword. It emits a strange energy that provides a supernatural force at the knight that uses it.", INCHEST, 100, 20, Jack_Forge_Furnace,780);
 	game_data.push_back(Bloody_Sword);
 
 	
 	//CHESTS
 	//Principal Square Chest
 	chest*PrincipalSquare_Chest = new chest(Principal_Square,"Principal Square chest","A big and blue metallic box.");
-	PrincipalSquare_Chest->data.push_back(Knight_Sword);
+	PrincipalSquare_Chest->data.push_back(Oil_Light);
 	game_data.push_back(PrincipalSquare_Chest);
 
 	//Furnace Chest
@@ -151,11 +151,39 @@ void world::Initialize(){
 	game_data.push_back(Furnace_Chest);
 	
 	//NPCs
+	//Dead end Street trader
 	trader* Marcus = new trader("Marcus", "Old man that lives in the street trying to survive with the rubbish of the people. He knows everthing about Bloody Sword.", 50, 0, Dead_end_Street, Marcus_Notes);
 	game_data.push_back(Marcus);
-	//NPCs
-	soldier* John = new soldier("John", "A soldier of Bloody Sword. He works for the King.", 200, 20, Principal_Square);
+	
+	//PrincipalSquare Soldier
+	soldier* John = new soldier("John", "A soldier of Bloody Sword. He works for the King.", 50, 5, Principal_Square);
 	game_data.push_back(John);
+	
+	//Ruined House Soldier
+	soldier* Izac = new soldier("Izac", "A soldier of Bloody Sword. He works for the King.", 50, 5, Ruined_House);
+	game_data.push_back(Izac);
+	
+	//Warehouse Soldier
+	soldier* Tom = new soldier("Tom", "A soldier of Bloody Sword. He works for the King.", 50, 5, Jack_Forge_Warehouse);
+	game_data.push_back(Tom);
+	
+	//Lobby Soldier
+	soldier* Zad = new soldier("Zad", "A soldier of Bloody Sword. He works for the King.", 50, 5, Jack_House_Lobby);
+	game_data.push_back(Zad);
+
+	//Jack House thieve
+	thief*Carl = new thief("Carl", "Son of Jack that works stealing value objects for his father.", 50, 15, Jack_House_MainRoom);
+	game_data.push_back(Carl);
+	Carl->data.push_back(Knight_Sword);
+
+	//Jack forge merchant
+	merchant* Jack = new merchant("Jack", "Owner of the best forge in the region. Recognized for their works and for being a friend of the king.", 50, 0, Jack_Forge_Shop, Raw_food, Golden_Dagger, Furnace_Key);
+	game_data.push_back(Jack);
+
+	//Jack Mainroom talker
+	talker* Daisy = new talker("Daisy", "Wife of Jack. He spends all the day playing with the slaves inside the house waiting for his husband.", 50, Jack_House_MainRoom);
+	game_data.push_back(Daisy);
+
 	//Map Build
 	//Principal Square
 	Principal_Square->data.push_back(PrincipalSquare_Chest);
@@ -165,32 +193,35 @@ void world::Initialize(){
 	Principal_Square->data.push_back(PrincipalSquare_DeadendStreet);
 	Principal_Square->data.push_back(John);
 	//Dead end street
-	Dead_end_Street->data.push_back(Raw_food);
-	Dead_end_Street->data.push_back(Oil_Light);
 	Dead_end_Street->data.push_back(DeadendStreet_PrincipalSquare);
 	Dead_end_Street->data.push_back(Marcus);
 	//Ruined House
 	Ruined_House->data.push_back(RuinedHouse_PrincipalSquare);
 	Ruined_House->data.push_back(Wine);
+	Ruined_House->data.push_back(Izac);
 	//Jack Lobby
 	Jack_House_Lobby->data.push_back(Lobby_PrincipalSquare);
 	Jack_House_Lobby->data.push_back(Lobby_MainRoom);
+	Jack_House_Lobby->data.push_back(Zad);
 	//Jack Main room
-	Jack_House_MainRoom->data.push_back(Golden_Dagger);
 	Jack_House_MainRoom->data.push_back(MainRoom_Bathroom);
 	Jack_House_MainRoom->data.push_back(MainRoom_Kitchen);
 	Jack_House_MainRoom->data.push_back(MainRoom_Lobby);
+	Jack_House_MainRoom->data.push_back(Carl);
+	Jack_House_MainRoom->data.push_back(Daisy);
+	
 	//Jack Kitchen
 	Jack_House_Kitchen->data.push_back(Kitchen_MainRoom);
 	//Jack Bathroom
 	Jack_House_Bathroom->data.push_back(Bathroom_MainRoom);
 	//Jack Shop
-	Jack_Forge_Shop->data.push_back(Furnace_Key);
 	Jack_Forge_Shop->data.push_back(Shop_PrincipalSquare);
 	Jack_Forge_Shop->data.push_back(Shop_Warehouse);
+	Jack_Forge_Shop->data.push_back(Jack);
 	//Jack Warehouse
 	Jack_Forge_Warehouse->data.push_back(Warehouse_Furnace);
 	Jack_Forge_Warehouse->data.push_back(Warehouse_Shop);
+	Jack_Forge_Warehouse->data.push_back(Tom);
 	//Jack LargeFurnace
 	Jack_Forge_Furnace->data.push_back(Furnace_Chest);
 	Jack_Forge_Furnace->data.push_back(Furnace_Warehouse);
@@ -233,7 +264,7 @@ void world::get_instruction(vector<string>& instruction){
 	}
 	
 	//Calculates the object focused
-	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look")){
+	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look" || instruction.buffer[0] == "buy" || instruction.buffer[0] == "sell")){
 		//If item is a composed name the two strings that compose it are fusioned 
 		if ((instruction.get_size() == 3 && instruction.buffer[1] != "room") || (instruction.get_size() == 5 && instruction.buffer[4] == "chest")){
 			instruction.buffer[1]+=instruction.buffer[2];
@@ -273,6 +304,7 @@ void world::get_instruction(vector<string>& instruction){
 
 bool world::apply_order(vector<string>& instruction){
 	int reader = false;
+	if (me->action == NOTHING){
 	//quit instruction
 	if (instruction.buffer[0] == "quit")return false;
 	//help instruction
@@ -307,44 +339,44 @@ bool world::apply_order(vector<string>& instruction){
 	); 
 	reader++; }
 
-	if (me->action == NOTHING){
-		//go instruction
-		if (instruction.buffer[0] == "go")me->apply_go_instruction(instruction), reader++;
-		//look instruction
-		else if (instruction.buffer[0] == "look")me->apply_look_instruction(instruction), reader++;
-
-		if (me->object_focused_ad != nullptr){
-			//pick instruction
-			if ((instruction.buffer[0] == "pick" && instruction.get_size() <= 4))me->apply_pick_instruction(), reader++;
-			//drop instruction
-			else if ((instruction.buffer[0] == "drop" && instruction.get_size() <= 4))me->apply_drop_instruction(), reader++;
-			//equip instruction
-			else if (instruction.buffer[0] == "equip"){ me->apply_equip_instruction(); reader++; }
-			//unequip instruction
-			else if (instruction.buffer[0] == "unequip"){ me->apply_unequip_instruction(); reader++; }
-			//put instruction
-			else if (instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
-			//get instruction
-			else if (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
-		}
-		else if (me->next_room_ad != nullptr && me->exit_focused != nullptr){
-			//open instruction
-			if ((instruction.buffer[0] == "open" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_open_door_instruction(); reader++; }
-			//close instruction
-			else if ((instruction.buffer[0] == "close" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_close_door_instruction(); reader++; }
-		}
+	
+	//go instruction
+	if (instruction.buffer[0] == "go")me->apply_go_instruction(instruction), reader++;
+	//look instruction
+	else if (instruction.buffer[0] == "look")me->apply_look_instruction(instruction), reader++;
+		
+	if (me->object_focused_ad != nullptr){
+		//pick instruction
+		if ((instruction.buffer[0] == "pick" && instruction.get_size() <= 4))me->apply_pick_instruction(), reader++;
+		//drop instruction
+		else if ((instruction.buffer[0] == "drop" && instruction.get_size() <= 4))me->apply_drop_instruction(), reader++;
+		//equip instruction
+		else if (instruction.buffer[0] == "equip"){ me->apply_equip_instruction(); reader++; }
+		//unequip instruction
+		else if (instruction.buffer[0] == "unequip"){ me->apply_unequip_instruction(); reader++; }
+		//put instruction
+		else if (instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
+		//get instruction
+		else if (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
+	}
+	else if (me->next_room_ad != nullptr && me->exit_focused != nullptr){
+		//open instruction
+		if ((instruction.buffer[0] == "open" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_open_door_instruction(); reader++; }
+		//close instruction
+		else if ((instruction.buffer[0] == "close" && instruction.get_size() == 3 && instruction.buffer[2] == "door")){ me->apply_close_door_instruction(); reader++; }
+	}
 	}
 	if (me->npc_focused != nullptr){
 		if (me->npc_focused->alive == true){
 			//talk instruction
 			if (instruction.buffer[0] == "talk" && instruction.buffer[1] == "to" || me->action == TALK){ me->apply_talk_instruction(instruction); reader++; }
 			//attack instruction
-			if (instruction.buffer[0] == "attack" || (instruction.buffer[0] == "special" && instruction.buffer[1] == "attack")){ me->apply_attack_instruction(instruction); reader++; }
+			if (instruction.buffer[0] == "attack" || (instruction.buffer[0] == "special" && instruction.buffer[1] == "attack") || me->action == ATTACK){ me->apply_attack_instruction(); reader++; }
 		}
 		else printf("%s is dead.", me->npc_focused->name.get_string());
 	}
 	//if the instruction is not the correct for the action Invalid Comand alert is printed
-	if (reader == false)printf("Invalid Comand");
+	if (reader == false){ printf("Invalid Comand"); return true; }
 	else return true;
 }
 	

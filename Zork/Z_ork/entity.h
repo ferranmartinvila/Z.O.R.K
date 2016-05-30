@@ -13,6 +13,7 @@ enum type{
 	SOILDER,
 	MERCHANT,
 	THIEF,
+	TALKER,
 	UNDEFINED
 };
 

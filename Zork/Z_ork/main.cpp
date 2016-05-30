@@ -45,7 +45,7 @@ int main(){
 				instruction[string_position] = _getch();
 				string_position++;
 				//Instruction finished
-				if (instruction[string_position - 1] == '\r'){
+				if (instruction[string_position - 1] == '\r' && string_position-1!=0){
 					instruction[string_position - 1] = '\0';
 					printf("Your instruction: %s\n", instruction);
 					//Tokenize the instruction

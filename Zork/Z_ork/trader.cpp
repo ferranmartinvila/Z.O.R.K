@@ -2,19 +2,9 @@
 #include "World.h"
 
 void trader::Update(){
-	if (game->me->location == location && alive){
-		/*list<entity*>::node* temp = game->me->data.first_element;
-		while (temp){
-			//If the player have Wine the trader will ask for it
-			if (((item*)temp->data)->name == "Wine"){
-				printf("\nHey can you give me the Wine?");
-				break;
-			}
-			temp = temp->next;
-		}
-		//printf("\nHey guy!");*/
+	if (action == ATTACK){
+		Attack();
 	}
-	if (live_points <= 0){ printf("a"); }
 }
 
 void trader::Talk(const vector<string> instruction){
@@ -39,7 +29,8 @@ void trader::Talk(const vector<string> instruction){
 		printf("Yes but you have to give me some Wine!");
 		break;
 	case 'c':
-		Trade();
+		//Trade Wine
+		this->Trade();
 		game->me->action = TALK;
 		break;
 	case 'd':
@@ -72,7 +63,7 @@ void trader::Trade(){
 	else{
 		printf("\nYou trade %s for %s", player_object->name.get_string(), npc_object->name.get_string());
 		npc_object->state = UNEQUIPED;
-		player_object->state = UNKNOWN;
+		player_object->state = IN_NPC;
 		player_object->state;
 		data.push_back(player_object);
 		game->me->data.push_back(npc_object);

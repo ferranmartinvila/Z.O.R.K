@@ -7,5 +7,7 @@ public:
 		location = location_added;
 		type = SOILDER;
 	}
+	void Attack();
+	void Update();
 };
 #endif
