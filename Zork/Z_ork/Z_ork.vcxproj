@@ -91,7 +91,6 @@
     <ClInclude Include="entity.h" />
     <ClInclude Include="exits.h" />
     <ClInclude Include="item.h" />
-    <ClInclude Include="leaks.h" />
     <ClInclude Include="rooms.h" />
     <ClInclude Include="string.h" />
     <ClInclude Include="World.h" />

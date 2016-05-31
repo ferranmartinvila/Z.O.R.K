@@ -2,7 +2,7 @@
 #define _exits_
 #include"string.h"
 #include "entity.h"
-struct room;
+#include "rooms.h"
 class exit:public entity{
 public:
 	//the rooms that the exit connects

@@ -1,7 +1,6 @@
 #include "World.h"
 #include "string.h"
 #include "vector.h"
-#include "leaks.h"
 #include <stdio.h>
 #include <Windows.h>
 #include <conio.h>
@@ -10,7 +9,6 @@
 
 world *game = nullptr;
 int main(){
-	ReportMemoryLeaks();
 	//Game data
 	game = new world;
 	game->Initialize();
@@ -25,7 +23,7 @@ int main(){
 	unsigned int string_position = 0;
 	vector<string> order;
 	//Game Init Text
-	printf("Introducction: Your are a brave Knight. Find your sword[Bloody Sword] to win the game while you fight for get money and buy objects.Enter help to see all the possible actions.");
+	printf("Introducction: Your are a brave Knight. Find your sword[Bloody Sword] to win the game while you fight for get money and buy objects.Enter help to see all the possible actions.\n\n");
 	//Game loop
 	while (option){
 		//Update time data
@@ -74,6 +72,6 @@ int main(){
 			else { printf("Imput Reset.\n"); string_position = 0; }
 		}
 	}
-	game->~world();
+	//game->~world();
 	return 0;
 }

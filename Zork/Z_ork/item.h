@@ -1,7 +1,7 @@
 #ifndef _item_
 #define _item_
 #include "entity.h"
-struct room;
+#include "rooms.h"
 //possible item states
 enum state{
 	EQUIPED,

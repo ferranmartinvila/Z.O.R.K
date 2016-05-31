@@ -53,7 +53,7 @@ void character::apply_look_instruction(vector<string>& instruction){
 		else{
 			int y = 0;
 			list<entity*>::node* temp = data.first_element;
-			for (int k = 0; k < data.get_size(); k++){
+			for (unsigned int k = 0; k < data.get_size(); k++){
 				if (temp->data->type == ITEM && ((item*)temp->data)->state == UNEQUIPED){
 					printf("Cell %i: %s\n", k, temp->data->name.get_string());
 					temp = temp->next;
@@ -171,6 +171,7 @@ bool character::apply_open_door_instruction(){
 		}
 		else{ printf("You need the Furnace Key and the Oil Light to enter here."); }
 	}
+	return true;
 }
 
 //close door instruction

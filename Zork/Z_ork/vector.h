@@ -88,14 +88,5 @@ public:
 		elements--;
 	}
 
-	//find position
-	/*unsigned int find_position(const type& to_find){
-		for (int k = 0; k < get_size(); k++){
-			if (buffer[k] == to_find){
-				return k;
-			}
-		}
-	}*/
-
 };
 #endif

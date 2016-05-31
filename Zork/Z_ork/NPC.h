@@ -1,7 +1,7 @@
 #ifndef _NPC_
 #define _NPC_
 #include"creature.h"
-struct item;
+#include "item.h"
 class npc :public creature{
 public:
 	virtual void Talk(const vector<string>& instruction);

@@ -39,7 +39,7 @@ void merchant::Talk(const vector<string> instruction){
 	else if (instruction.buffer[0] == "sell")printf("\nInvalid Command");
 	if (instruction.buffer[0] == "sell" && game->me->object_focused_ad != nullptr){
 		if (game->me->object_focused_ad->state == UNEQUIPED){
-			printf("You sell %s ang get + %i", game->me->object_focused_ad->name.get_string(), game->me->object_focused_ad->price);
+			printf("You sell %s and get + %i", game->me->object_focused_ad->name.get_string(), game->me->object_focused_ad->price);
 			Sell(game->me->object_focused_ad);
 		}
 		else printf("This object isn't in your available store");

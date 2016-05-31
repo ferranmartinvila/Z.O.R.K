@@ -9,7 +9,7 @@ void thief::Attack(){
 		printf("\n%s hit you with %i damage!", name.get_string(), attack);
 	}
 	if (game->me->live_points <= 0){
-		printf("\n%s kills you!enter['reset'] to reset de game.", name.get_string());
+		printf("\n%s kills you!enter['reset'] to reset de game at before the fight.", name.get_string());
 		game->me->action = DEAD;
 		game->me->alive = false;
 	}

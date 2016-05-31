@@ -2,7 +2,7 @@
 #define _chest_
 #include "entity.h"
 #include "item.h"
-struct room;
+#include "rooms.h"
 class chest :public entity{
 public:
 
