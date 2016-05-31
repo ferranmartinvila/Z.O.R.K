@@ -401,10 +401,16 @@ bool world::apply_order(vector<string>& instruction){
 
 //reset game
 bool world::reset_game(){
-	world::~world();
-	Initialize();
+	//Character	
+	me->action = NOTHING;
+	me->live_points = 20;
+	me->alive = true;
+	me->npc_focused->action = NOTHING;
+	me->npc_focused->heal();
 	printf("\n\nTHE GAME HAS BEEN RESET!\n\n");
+	printf("Now you are at the same situation before start the fight that kill you.\n");
 	return true;
 }
-	
+
+
 

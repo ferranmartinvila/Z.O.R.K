@@ -1,7 +1,7 @@
 #ifndef _CREATURE_
 #define _CREATURE_
 #include "entity.h"
-struct room;
+#include "rooms.h"
 enum STATE{
 	RUN,
 	ATTACK,
@@ -39,8 +39,8 @@ public:
 	bool heal(){
 		//not regen totally
 		if (live_points < total_live-5){
-			live_points += 5;
-			printf("\n%s regen %i live points!\n", name.get_string(), 5);
+			printf("\n%s regen %i live points!\n", name.get_string(), total_live-live_points);
+			live_points = total_live;
 		}
 		return true;
 	}
