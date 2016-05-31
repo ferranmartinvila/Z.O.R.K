@@ -35,7 +35,7 @@ void world::Initialize(){
 	game_data.push_back(Jack_House_Bathroom);
 
 	//Jack's Forge Shop Data
-	room*Jack_Forge_Shop = new room("Jack's Forge Shop", "Little room full of iron tools and with a showcase of weapons behind the counter.");
+	room*Jack_Forge_Shop = new room("Jack's Forge Shop", "Little room full of iron tools and a showcase of weapons behind the counter.");
 	game_data.push_back(Jack_Forge_Shop);
 
 	//Jack's Forge Warehouse Data
@@ -152,23 +152,23 @@ void world::Initialize(){
 	
 	//NPCs
 	//Dead end Street trader
-	trader* Marcus = new trader("Marcus", "Old man that lives in the street trying to survive with the rubbish of the people. He knows everthing about Bloody Sword.", 50, 0, Dead_end_Street, Marcus_Notes);
+	trader* Marcus = new trader("Marcus", "Old man that lives in the street trying to survive with the rubbish of the people. He knows everthing about Bloody Sword.", 50,5, Dead_end_Street, Marcus_Notes);
 	game_data.push_back(Marcus);
 	
 	//PrincipalSquare Soldier
-	soldier* John = new soldier("John", "A soldier of Bloody Sword. He works for the King.", 50, 5, Principal_Square);
+	soldier* John = new soldier("John", "A soldier of Bloody Sword. He works for the King.", 50, 15, Principal_Square);
 	game_data.push_back(John);
 	
 	//Ruined House Soldier
-	soldier* Izac = new soldier("Izac", "A soldier of Bloody Sword. He works for the King.", 50, 5, Ruined_House);
+	soldier* Izac = new soldier("Izac", "A soldier of Bloody Sword. He works for the King.", 50, 15, Ruined_House);
 	game_data.push_back(Izac);
 	
 	//Warehouse Soldier
-	soldier* Tom = new soldier("Tom", "A soldier of Bloody Sword. He works for the King.", 50, 5, Jack_Forge_Warehouse);
+	soldier* Tom = new soldier("Tom", "A soldier of Bloody Sword. He works for the King.", 50, 15, Jack_Forge_Warehouse);
 	game_data.push_back(Tom);
 	
 	//Lobby Soldier
-	soldier* Zad = new soldier("Zad", "A soldier of Bloody Sword. He works for the King.", 50, 5, Jack_House_Lobby);
+	soldier* Zad = new soldier("Zad", "A soldier of Bloody Sword. He works for the King.", 50, 15, Jack_House_Lobby);
 	game_data.push_back(Zad);
 
 	//Jack House thieve
@@ -177,7 +177,7 @@ void world::Initialize(){
 	Carl->data.push_back(Knight_Sword);
 
 	//Jack forge merchant
-	merchant* Jack = new merchant("Jack", "Owner of the best forge in the region. Recognized for their works and for being a friend of the king.", 50, 0, Jack_Forge_Shop, Raw_food, Golden_Dagger, Furnace_Key);
+	merchant* Jack = new merchant("Jack", "Owner of the best forge in the region. Recognized for their works and for being a friend of the king.", 50, 10, Jack_Forge_Shop, Raw_food, Golden_Dagger, Furnace_Key);
 	game_data.push_back(Jack);
 
 	//Jack Mainroom talker
@@ -229,6 +229,14 @@ void world::Initialize(){
 	//Character	
 	me->location = Principal_Square;
 	me->next_room_ad = Principal_Square;
+	me->action = NOTHING;
+	me->money = 0;
+	me->live_points = 20;
+	me->attack = 15;
+	me->alive = true;
+	while (me->data.empty() == false){
+		me->data.pop_back();
+	}
 	game_data.push_back(me);
 }
 
@@ -240,7 +248,7 @@ void world::get_instruction(vector<string>& instruction){
 	me->object_focused_ad = nullptr;
 	me->chest_focused_ad = nullptr;
 	//Get exit & room focused
-	if (instruction.buffer[0] == "go" || instruction.buffer[0] == "close" || instruction.buffer[0] == "open" || instruction.buffer[0] == "look"){
+	if ((instruction.buffer[0] == "go" || instruction.buffer[0] == "close" || instruction.buffer[0] == "open" || instruction.buffer[0] == "look") && instruction.get_size()>1){
 		unsigned int temp_direction = NONE;
 		if (instruction.buffer[1] == "north")temp_direction = NORTH;
 		else if (instruction.buffer[1] == "east")temp_direction = EAST;
@@ -264,7 +272,7 @@ void world::get_instruction(vector<string>& instruction){
 	}
 	
 	//Calculates the object focused
-	if ((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look" || instruction.buffer[0] == "buy" || instruction.buffer[0] == "sell")){
+	if (((instruction.buffer[0] == "pick" || instruction.buffer[0] == "drop" || instruction.buffer[0] == "equip" || instruction.buffer[0] == "unequip" || instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look" || instruction.buffer[0] == "buy" || instruction.buffer[0] == "sell")&& instruction.get_size()>1)){
 		//If item is a composed name the two strings that compose it are fusioned 
 		if ((instruction.get_size() == 3 && instruction.buffer[1] != "room") || (instruction.get_size() == 5 && instruction.buffer[4] == "chest")){
 			instruction.buffer[1]+=instruction.buffer[2];
@@ -278,7 +286,7 @@ void world::get_instruction(vector<string>& instruction){
 		}
 	}
 	//Chest focused
-	if (((instruction.buffer[0] == "put" || instruction.buffer[0] == "get") && (instruction.buffer[4] == "chest" || instruction.buffer[3] == "chest")) || instruction.buffer[0] == "look"){
+	if ((instruction.buffer[0] == "put" || instruction.buffer[0] == "get" || instruction.buffer[0] == "look") && instruction.get_size()>1){
 		//Chest focused
 		list<entity*>::node* temp = me->location->data.first_element;
 		while(temp){
@@ -292,7 +300,7 @@ void world::get_instruction(vector<string>& instruction){
 		}
 	}
 	//NPC focused
-	if (instruction.buffer[0] == "talk" || instruction.buffer[0] == "look" || instruction.buffer[0] == "attack"){
+	if ((instruction.buffer[0] == "talk" || instruction.buffer[0] == "look" || instruction.buffer[0] == "attack") && instruction.get_size()>1){
 		for (int k = 0; k < MAX_ENTITY; k++){
 			if ((instruction.get_size() == 3 && ((npc*)game_data.buffer[k])->name == instruction.buffer[2]) || (instruction.get_size() == 2 && ((npc*)game_data.buffer[k])->name == instruction.buffer[1])){
 				me->npc_focused = (npc*)game_data.buffer[k];
@@ -336,14 +344,23 @@ bool world::apply_order(vector<string>& instruction){
 	"\nput + object + into + chest -> Put the selected item into the chest"
 	//NPC actions
 	"\ntalk to + npc_name -> Talk to the selected npc"
+	"\nlook + npc_name -> Show all the information of the npc"
+	"\nattack + npc_name -> Start a fight"
+	"\n(inside shop) sell + object / buy + object"
+	"\n(when inside shop) quit -> Stop trading"
+	"\n(when you are in a interaction with a npc non npc related commands are blocked)"
+	"\n(you have to respect upper cases in the names)"
+	//Quit
+	"\nquit ->Exit the game"
+	"\n"
 	); 
 	reader++; }
 
 	
 	//go instruction
-	if (instruction.buffer[0] == "go")me->apply_go_instruction(instruction), reader++;
+	if (instruction.buffer[0] == "go" && instruction.get_size()>1)me->apply_go_instruction(instruction), reader++;
 	//look instruction
-	else if (instruction.buffer[0] == "look")me->apply_look_instruction(instruction), reader++;
+	else if (instruction.buffer[0] == "look" && instruction.get_size()>1)me->apply_look_instruction(instruction), reader++;
 		
 	if (me->object_focused_ad != nullptr){
 		//pick instruction
@@ -355,9 +372,9 @@ bool world::apply_order(vector<string>& instruction){
 		//unequip instruction
 		else if (instruction.buffer[0] == "unequip"){ me->apply_unequip_instruction(); reader++; }
 		//put instruction
-		else if (instruction.buffer[0] == "put" && (instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
+		else if (instruction.buffer[0] == "put" && instruction.get_size()>3 &&(instruction.buffer[2] == "into" || instruction.buffer[3] == "into") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_put_instruction(); reader++; }
 		//get instruction
-		else if (instruction.buffer[0] == "get" && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
+		else if (instruction.buffer[0] == "get" && instruction.get_size()>3 && (instruction.buffer[2] == "from" || instruction.buffer[3] == "from") && (instruction.buffer[3] == "chest" || instruction.buffer[4] == "chest")){ me->apply_get_instruction(); reader++; }
 	}
 	else if (me->next_room_ad != nullptr && me->exit_focused != nullptr){
 		//open instruction
@@ -371,13 +388,23 @@ bool world::apply_order(vector<string>& instruction){
 			//talk instruction
 			if (instruction.buffer[0] == "talk" && instruction.buffer[1] == "to" || me->action == TALK){ me->apply_talk_instruction(instruction); reader++; }
 			//attack instruction
-			if (instruction.buffer[0] == "attack" || (instruction.buffer[0] == "special" && instruction.buffer[1] == "attack") || me->action == ATTACK){ me->apply_attack_instruction(); reader++; }
+			if (instruction.buffer[0] == "attack" || me->action == ATTACK){ me->apply_attack_instruction(); reader++; }
+			//special attack instruction
+			if (instruction.buffer[0] == "special" && instruction.buffer[1] == "attack" && me->action == ATTACK){ me->apply_special_attack_instruction(); reader++; }
 		}
-		else printf("%s is dead.", me->npc_focused->name.get_string());
 	}
+	if (me->action == DEAD && instruction.buffer[0] == "reset")reader = reset_game();
 	//if the instruction is not the correct for the action Invalid Comand alert is printed
 	if (reader == false){ printf("Invalid Comand"); return true; }
 	else return true;
+}
+
+//reset game
+bool world::reset_game(){
+	world::~world();
+	Initialize();
+	printf("\n\nTHE GAME HAS BEEN RESET!\n\n");
+	return true;
 }
 	
 

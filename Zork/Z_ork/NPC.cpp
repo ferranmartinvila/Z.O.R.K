@@ -1,10 +1,16 @@
 #include "NPC.h"
 #include "World.h"
+#include <time.h>
+#include <stdlib.h>
+#include <conio.h>
+
 void npc::Drop(){
 	//Push all the npc items at his room
 	int k = 0;
 	list<entity*>::node* temp = data.first_element;
 	while (temp){
+		((item*)temp->data)->state = UNKNOWN;
+		((item*)temp->data)->place = location;
 		location->data.push_back(temp->data);
 		temp = temp->next;
 		k++;
@@ -21,21 +27,32 @@ void npc::Talk(const vector<string>& instruction){
 }
 
 void npc::Attack(){
-	if (live_points>=1){
+	if (game->me->live_points >= 1 && game->me->location == location && action == ATTACK && alive){
 		action = ATTACK;
-		printf("Please stop im not made for fight!");
-		}
+		srand(time(NULL));
+		int random = rand() % attack;
+		game->me->live_points -= random;
+		printf("\n%s hit you with %i damage!", name.get_string(), random);
+	}
+	if (game->me->live_points <= 0){
+		printf("\n%s kills you!enter['reset'] to reset de game.", name.get_string());
+		game->me->action = DEAD;
+		game->me->alive = false;
+	}
 	if (live_points <= 0){
 		action = NOTHING;
+		game->me->action = NOTHING;
 		Drop();
 		Die();
-		printf("You get +20 money");
-		game->me->money += 20;
+		printf("You get +100 money");
+		game->me->money += 50;
 	}
+	else action = NOTHING;
 }
 
 void npc::Die(){
 	this->location->data.erase(this->location->data.find_position(this));
+	alive = false;
 }
 
 void npc::Sell(item*object){

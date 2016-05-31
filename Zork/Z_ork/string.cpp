@@ -60,8 +60,8 @@ bool string::operator==(const string& string){
 	else return true;
 }
 bool string::operator ==(const char* word){
-	if (strcmp(STR, word))return false;
-	else return true;
+		if (strcmp(STR, word))return false;
+		else return true;
 }
 //operator !=
 bool string::operator!=(const string& string){

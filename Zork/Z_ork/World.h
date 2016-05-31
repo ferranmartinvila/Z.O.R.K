@@ -40,6 +40,10 @@ public:
 	}
 	//world destructor
 	~world(){
+		while (game_data.empty()==false)
+		{
+			game_data.pop_back();
+		}
 		game_data.clean();
 	}
 	//initialize word function
@@ -48,6 +52,8 @@ public:
 	bool apply_order(vector<string>& );
 	//read the order that the user enter
 	void get_instruction(vector<string>&);
+	//reset game
+	bool reset_game();
 };
 extern world*game;
 #endif

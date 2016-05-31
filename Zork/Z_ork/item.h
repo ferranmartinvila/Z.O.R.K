@@ -23,11 +23,11 @@ public:
 		place = room_added;
 	}
 	//default item constructor
-	/*~item(){
-		
-		name.erase();
-		description.erase();
-	}*/
+	~item(){
+		entity::~entity();
+		place = nullptr;
+
+	}
 	//item look it vitual function
 	void look_it(){
 		printf("%s\n%s\nSTATS:\nlive upgrade[+%i]\nattack upgrade[+%i]\n", name.get_string(), description.get_string(),live_buff,attack_buff);

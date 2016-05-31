@@ -17,13 +17,6 @@ public:
 		capacity = 2;
 		type = CHEST;
 	}
-	~chest(){
-		/*storage.clean();
-		name.erase();
-		description.erase();*/
-	}
-	
-	
 	//Functions
 	void look_it(){
 		list<entity*>::node* temp = data.first_element;

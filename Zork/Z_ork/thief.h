@@ -11,6 +11,11 @@ public:
 		type = THIEF;
 		last_room = location;
 	}
+	~thief(){
+		last_room = nullptr;
+		creature::~creature();
+	}
+
 	void Attack();
 	void Update();
 };

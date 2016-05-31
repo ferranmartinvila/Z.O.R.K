@@ -24,7 +24,8 @@ int main(){
 	char instruction[SIZE];
 	unsigned int string_position = 0;
 	vector<string> order;
-	
+	//Game Init Text
+	printf("Introducction: Your are a brave Knight. Find your sword[Bloody Sword] to win the game while you fight for get money and buy objects.Enter help to see all the possible actions.");
 	//Game loop
 	while (option){
 		//Update time data
@@ -32,9 +33,17 @@ int main(){
 		//Program waiting
 		if (current_time > last_time + update_rate){
 			//Udates the game entities
-			printf("\n game updated...\n");
+			//printf("\n game updated...\n");
 			for (int k = 0; k < MAX_ENTITY; k++){
 				game->game_data.buffer[k]->Update();
+			}
+			//Character special attack reload
+			if (game->me->energy == false){
+				game->me->last_time++;
+				if (game->me->last_time == game->me->reload_time){
+					game->me->energy = true;
+					game->me->last_time = 0;
+				}
 			}
 			last_time = current_time;
 		}
@@ -53,14 +62,18 @@ int main(){
 					//Apply user input
 					game->get_instruction(order);
 					option = game->apply_order(order);
+					printf("\n");
 					//Imput data clean
 					string_position = 0;
 					order.clean();
 				}
+				instruction[string_position] = '\0';
+				printf("Instruction: %s\n", instruction);
 			}
 			//Lenght error
 			else { printf("Imput Reset.\n"); string_position = 0; }
 		}
 	}
+	game->~world();
 	return 0;
 }

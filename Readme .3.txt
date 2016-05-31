@@ -5,7 +5,7 @@ By Ferran Martin Vila
 move all arround the map changing the doors states and playing with the objects. If the player equips a object it will
 revie its stats upgrades.
 
-All this instructions can be introcuded:
+All this instructions can be introduced:
 
 
 look + room -> look this room

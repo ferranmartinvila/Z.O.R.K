@@ -29,19 +29,24 @@ public:
 	//Money
 	unsigned int money = 0;
 
+	//Special attack
+	bool energy = true;
+	unsigned int reload_time = 5;
+	unsigned int last_time = 0;
+
+
 public:
 
-	character() :creature("Earl the knight", "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.",50, 10){
+	character() :creature("Earl the knight", "You are a brave knight from a far village called Gandar, there all the people respects you, but here in Bloody Sword nobody knows you.",20, 10){
 		type = CHARACTER;
 	}
 	~character(){
-		/*
-		name.erase();
-		description.erase();
-		direction[0] = NULL;
-		direction[1] = NULL;
-		equipation = nullptr;
-		bag.clean();*/
+		entity::~entity();
+		next_room_ad = nullptr;
+		exit_focused = nullptr;
+		object_focused_ad = nullptr;
+		chest_focused_ad = nullptr;
+		npc_focused = nullptr;
 	}
 	void Update();
 	//Functions
@@ -80,5 +85,9 @@ public:
 
 	//attack instruction
 	bool apply_attack_instruction();
+
+	//special attack instruction
+	bool apply_special_attack_instruction();
+
 };
 #endif

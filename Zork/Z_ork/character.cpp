@@ -30,7 +30,19 @@ void character::apply_go_instruction(const vector<string>& instruction){
 void character::apply_look_instruction(vector<string>& instruction){
 	
 	//look room operator
-	if (instruction.buffer[1] == "room" && instruction.get_size() == 2)printf("%s\n%s", location->name.get_string(), location->description.get_string());
+	if (instruction.buffer[1] == "room" && instruction.get_size() == 2){ 
+		printf("%s\n%s", location->name.get_string(), location->description.get_string());
+		printf("\nContaints:");
+		list<entity*>::node*temp = location->data.first_element;
+		int k = 0;
+		while (temp){
+			if (temp->data->type != EXIT)
+				printf("\n%s", temp->data->name.get_string());
+			temp = temp->next;
+			k++;
+		}
+		if (k == 0)printf("This room is empty.");
+	}
 	
 	//look me operator
 	else if (instruction.buffer[1] == "me")printf("%s\n%s\nSTATS:\nlive[%i]\nattack[%i]\nmoney = %i", name.get_string(), description.get_string(), live_points, attack,money);
@@ -57,7 +69,7 @@ void character::apply_look_instruction(vector<string>& instruction){
 		unsigned int prints = 0;
 		list<entity*>::node* temp = location->data.first_element;
 		while (temp){
-			if (((entity*)temp->data)->type == ITEM){
+			if (((entity*)temp->data)->type == ITEM && ((item*)temp->data)->state == UNKNOWN){
 				printf("\n- %s", ((item*)temp->data)->name.get_string());
 				prints++;
 			}
@@ -289,6 +301,7 @@ bool character::apply_get_instruction(){
 		data.push_back(object_focused_ad);
 		chest_focused_ad->data.erase(chest_focused_ad->data.find_position((object_focused_ad)));
 		printf("You get the %s from %s", object_focused_ad->name.get_string(), chest_focused_ad->name.get_string());
+		if (object_focused_ad->name == "Bloody Sword")printf("\n\nYOU WIN THE GAME!!\n\n");
 		return true;
 	}
 }
@@ -313,24 +326,45 @@ bool character::apply_talk_instruction(const vector<string>& instruction){
 
 //attack instruction
 bool character::apply_attack_instruction(){
-	if (npc_focused->location == location ){
+	if (npc_focused->location == location){
 		if (npc_focused->live_points >= 1){
 			game->me->action = ATTACK;
 			npc_focused->action = ATTACK;
 			npc_focused->live_points -= attack;
 			printf("\nYou do %i damage to %s!", attack, npc_focused->name.get_string());
-			if (npc_focused->live_points <= 0){
+			if (npc_focused->live_points <= 0 && alive){
 				printf("\nYou defeat %s!\n", npc_focused->name.get_string());
 				game->me->action = NOTHING;
+				game->me->npc_focused->alive = false;
 			}
 		}
 		else printf("%s is dead.",npc_focused->name.get_string());
 		
 	}
-	else{ printf("\nThis npc now is not inside this room."); }
+	else{ printf("\nThis npc is not inside this room."); }
 	return true;
 }
 
 void character::Update(){
 	if (action == ATTACK)apply_attack_instruction();
+	else if(alive) heal();
+}
+
+//special attack instruction
+bool character::apply_special_attack_instruction(){
+	if (energy){
+		npc_focused->live_points -= attack*2;
+		energy = false;
+		printf("\nSpecial attack! you do %i damage!", attack*2);
+	}
+	else{
+		printf("Special attack is not ready!");
+	}
+
+	if (npc_focused->live_points <= 0){
+		printf("\nYou defeat %s!\n", npc_focused->name.get_string());
+		action = NOTHING;
+		npc_focused->action = NOTHING;
+	}
+	return true;
 }

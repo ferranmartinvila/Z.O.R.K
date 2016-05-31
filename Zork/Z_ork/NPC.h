@@ -14,6 +14,6 @@ public:
 	virtual void Buy(item*object);
 public:
 	//Constructor
-	npc(const string& name, const string& description, unsigned int live_points, unsigned int attack) :creature(name, description,live_points,attack){}
+	npc(const string& name, const string& description, unsigned int live_points, unsigned int attack = 5) :creature(name, description,live_points,attack){}
 };
 #endif

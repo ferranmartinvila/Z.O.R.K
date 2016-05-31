@@ -33,6 +33,7 @@ public:
 	~entity(){
 		name.erase();
 		description.erase();
+		while (data.empty() == false){ data.pop_back();}
 		data.clean();
 	}
 

@@ -5,7 +5,7 @@
 #include "item.h"
 class talker :public npc{
 public:
-	talker(const string& name, const string& description, unsigned int live_points, room* location_added, unsigned int attack = 0) :npc(name, description, live_points, attack){
+	talker(const string& name, const string& description, unsigned int live_points, room* location_added, unsigned int attack = 5) :npc(name, description, live_points, attack){
 		location = location_added;
 		type = TALKER;
 	}

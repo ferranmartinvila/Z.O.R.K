@@ -9,13 +9,15 @@ enum STATE{
 	TRADE,
 	SELL,
 	BUY,
+	DEAD,
 	NOTHING
 };
 
 class creature :public entity{
 public:
 	//live
-	unsigned int live_points;
+	int live_points;
+	int total_live;
 	//attack
 	unsigned int attack = 0;
 	//creature localtion
@@ -26,7 +28,22 @@ public:
 	STATE action = NOTHING;
 public:
 	//Constructor
-	creature(const string& name, const string& description, unsigned int live_points, unsigned int attack) :entity(name, description), live_points(live_points), attack(attack){}
+	creature(const string& name, const string& description, unsigned int live_points, unsigned int attack) :entity(name, description), live_points(live_points), attack(attack),total_live(live_points){}
+	//Destructor
+	~creature(){
+		location = nullptr;
+		entity::~entity();
+	}
+
+
+	bool heal(){
+		//not regen totally
+		if (live_points < total_live-5){
+			live_points += 5;
+			printf("\n%s regen %i live points!\n", name.get_string(), 5);
+		}
+		return true;
+	}
 };
 
 
